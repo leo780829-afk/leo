@@ -813,19 +813,42 @@ function drawBigScreen(t){
     g.addColorStop(0,'#0c1c2e'); g.addColorStop(1,'#160e28');
     ctx.fillStyle=g; ctx.fillRect(0,0,pw,ph);
     const title=Math.min(pw*0.045, ph*0.16);
-    ctx.fillStyle='#d8f6ff';
+    const titleStr='團隊狀態總覽';
+    const dateStr=state.asOf||'';
+    const visL=clamp((0-cam.panX)/cam.zoom-p.x, 0, pw);
+    const visR=clamp((canvas.clientWidth-cam.panX)/cam.zoom-p.x, 0, pw);
+    const visW=Math.max(40, visR-visL);
     ctx.font=`700 ${title}px ${FONT}`;
-    ctx.textAlign='left'; ctx.textBaseline='top';
-    ctx.fillText('團隊狀態總覽', 10, 8);
-    ctx.fillStyle='#9eb4d4';
+    const tw=ctx.measureText(titleStr).width;
     ctx.font=`500 ${title*0.62}px ${FONT}`;
-    ctx.textAlign='right';
-    ctx.fillText(state.asOf||'', pw-10, 10);
+    const dw=ctx.measureText(dateStr).width;
+    ctx.textBaseline='top';
+    let headerH=title+10;
+    if(visW>tw+dw+36){
+      ctx.fillStyle='#d8f6ff';
+      ctx.font=`700 ${title}px ${FONT}`;
+      ctx.textAlign='left';
+      ctx.fillText(titleStr, visL+10, 8);
+      ctx.fillStyle='#9eb4d4';
+      ctx.font=`500 ${title*0.62}px ${FONT}`;
+      ctx.textAlign='right';
+      ctx.fillText(dateStr, visR-10, 10);
+    }else{
+      const cx=(visL+visR)/2;
+      ctx.fillStyle='#d8f6ff';
+      ctx.font=`700 ${Math.min(title, visW/6.4)}px ${FONT}`;
+      ctx.textAlign='center';
+      ctx.fillText(titleStr, cx, 6);
+      ctx.fillStyle='#9eb4d4';
+      ctx.font=`500 ${title*0.55}px ${FONT}`;
+      ctx.fillText(dateStr, cx, 8+title*1.12);
+      headerH=title*1.12+title*0.55+14;
+    }
     const list=actors;
     const n=list.length;
     const cols=n<=4?Math.max(1,n):n<=8?4:n===9?3:4;
     const rows=Math.ceil(list.length/cols)||1;
-    const top=title+16, gap=6;
+    const top=headerH+8, gap=6;
     const cw=(pw-16-(cols-1)*gap)/cols;
     const ch=(ph-top-10-(rows-1)*gap)/rows;
     list.forEach((a,i)=>{
@@ -1579,7 +1602,7 @@ function cameraForProjected(ps, fill){
     minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y);
   }
   const narrow=canvas.clientWidth<860;
-  const top=hudH()+(narrow?4:6), bot=narrow?72:20;
+  const top=hudH()+(narrow?10:6), bot=narrow?72:20;
   const vw=canvas.clientWidth, vh=canvas.clientHeight;
   const zoom=clamp(Math.min((vw-24)/(maxX-minX), (vh-top-bot)/(maxY-minY))*fill, 0.25, 4.6);
   const viewCx=vw/2;
@@ -1596,7 +1619,7 @@ function cameraForZone(name){
   if(name==='all') return fitCamera();
   let pts=ZONE_PTS[name];
   if(canvas.clientWidth<820 && name==='mgmt'){
-    pts=[[CX-250,90,210],[CX+250,90,210],[CX-240,650,0],[CX+240,650,0]];
+    pts=[[CX-300,62,334],[CX+300,62,334],[CX-250,640,0],[CX+250,640,0]];
   }
   return cameraForProjected(pts.map(p=>proj(p[0],p[1],p[2]||0)), canvas.clientWidth<820?0.92:0.9);
 }
