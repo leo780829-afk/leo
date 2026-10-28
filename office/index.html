@@ -44,6 +44,12 @@ html,body{margin:0;height:100%;overflow:hidden;background:#d3d4d9;font-family:"P
 #panel .it em{font-style:normal;float:right;font-size:11px;color:#8a93a8}
 @media (min-width:900px){#ticker{display:block}}
 @media (max-width:520px){#top h1{font-size:14px}#top small{font-size:10.5px}.b{min-width:0;padding:7px 9px;font-size:12px}#btns{flex-direction:row;flex-wrap:wrap;top:auto;bottom:calc(64px + env(safe-area-inset-bottom));left:6px;right:6px;justify-content:center;gap:6px}#legend{font-size:10.5px;gap:7px}}
+#roster{position:fixed;left:max(10px,env(safe-area-inset-left));right:max(10px,env(safe-area-inset-right));display:none;grid-template-columns:1fr 1fr;gap:6px;z-index:3;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+#roster .rc{background:rgba(255,255,255,.88);border-radius:11px;padding:5px 8px;min-width:0;border:1px solid rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(40,50,90,.12)}
+#roster .rc .n{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:#1d2433;white-space:nowrap}
+#roster .rc .n i{width:8px;height:8px;border-radius:50%;flex:none}
+#roster .rc .n span{margin-left:auto;font-size:10.5px;font-weight:700}
+#roster .rc .t{font-size:11px;color:#4a5570;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
 </style>
 </head>
 <body>
@@ -57,6 +63,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#d3d4d9;font-family:"P
   <button class="b glass" id="bRout">今日排程</button>
   <button class="b glass" id="bReset">重設視角</button>
 </div>
+<div id="roster"></div>
 <div id="legend" class="glass"></div>
 <div id="sheet" class="glass"></div>
 <div id="panel"><div class="in"></div></div>
@@ -369,6 +376,7 @@ const EMBEDDED = {
   "meeting": "選填。active=true 時全員到白板開會。"
  }
 };
+const TESTWORK=/testwork/.test(location.search),TESTREST=/testrest/.test(location.search);
 const SCENE_W=1280, SCENE_H=720;
 const LIGHT = {working:["#22d391","工作中"],idle:["#6f9bff","閒置"],waiting:["#ffb020","等待中"],blocked:["#ff4d63","卡關"],unknown:["#98a2b8","狀態未確認"]};
 const DEPTC = {"管理部":"#7c5cff","投資研究部":"#1fb5e8","內容工作室":"#ff5fa8"};
@@ -390,8 +398,8 @@ const MEET_SPOTS=[[971,246],[1011,266],[1051,286],[954,273],[994,293],[1034,313]
 const WB=[1056,194]; // 白板
 const IDLE_SPOTS=[COFFEE,SOFA,PLANT,WINDOW];
 /* 休息區：待命/等待/閒置的 BOT 會站在這裡（每人固定一格，不重疊） */
-const REST={alfred:[835,368],buffett:[915,368],four:[995,368],daytrade:[875,430],researcher:[955,430],ip:[860,510],badminton:[940,510],meimei:[1020,430],math:[780,510]};
-const REST_LABEL=[1030,398];
+const REST={alfred:[800,350],buffett:[905,350],four:[1085,385],daytrade:[850,440],researcher:[948,452],meimei:[1020,412],ip:[810,545],badminton:[905,530],math:[760,470]};
+const REST_LABEL=[1000,330];
 /* 每張桌上螢幕的四角（場景座標：左上、右上、右下、左下），由場景圖偵測藍色螢幕取得 */
 const MON={"meimei": [[587.0, 211.5], [618.0, 202.5], [618.5, 223.5], [587.5, 233.0]], "alfred": [[431.4, 258.7], [466.9, 247.1], [467.4, 270.4], [432.4, 282.0]], "four": [[272.0, 308.5], [307.5, 297.5], [309.0, 320.0], [273.5, 327.5]], "daytrade": [[347.0, 398.0], [384.5, 386.0], [385.5, 409.5], [349.0, 422.0]], "researcher": [[520.0, 339.0], [555.0, 327.5], [555.5, 350.5], [521.5, 362.5]], "buffett": [[438.5, 491.0], [477.5, 477.5], [478.5, 502.5], [440.5, 516.0]], "ip": [[679.0, 284.5], [711.5, 274.5], [711.0, 296.5], [679.5, 307.0]], "badminton": [[613.0, 427.0], [649.0, 415.0], [649.0, 439.0], [613.0, 452.0]], "math": [[776.0, 363.0], [809.5, 351.5], [809.5, 375.0], [776.0, 387.0]]};
 
@@ -404,15 +412,19 @@ function minZoom(){return Math.min(VW/SCENE_W,VH/SCENE_H)*0.98}
 function maxZoom(){return 3.2}
 function clampCam(){cam.z=Math.max(minZoom(),Math.min(maxZoom(),cam.z));
   const hw=VW/2/cam.z,hh=VH/2/cam.z;
-  const mx=Math.max(0,SCENE_W/2-hw)+60, my=Math.max(0,SCENE_H/2-hh)+60;
+  const mx=Math.abs(SCENE_W/2-hw)+60, my=Math.abs(SCENE_H/2-hh)+60;
   cam.x=Math.max(SCENE_W/2-mx,Math.min(SCENE_W/2+mx,cam.x));cam.y=Math.max(SCENE_H/2-my,Math.min(SCENE_H/2+my,cam.y));}
 let tween=null,camSave=null;
 function focusCam(x,y,z){if(!camSave)camSave={x:cam.x,y:cam.y,z:cam.z};tween={x,y,z:z||cam.z,t:0,from:{x:cam.x,y:cam.y,z:cam.z}};}
 function restoreCam(){if(camSave){tween={x:camSave.x,y:camSave.y,z:camSave.z,t:0,from:{x:cam.x,y:cam.y,z:cam.z}};camSave=null;}}
 function stepTween(dt){if(!tween)return;tween.t=Math.min(1,tween.t+dt/1.4);const k=tween.t<.5?2*tween.t*tween.t:1-Math.pow(-2*tween.t+2,2)/2;cam.x=tween.from.x+(tween.x-tween.from.x)*k;cam.y=tween.from.y+(tween.y-tween.from.y)*k;cam.z=tween.from.z+(tween.z-tween.from.z)*k;clampCam();if(tween.t>=1)tween=null;}
+const FIT_BOX=[245,1115]; // 手機：BOT 活動範圍（場景 x），整個寬度塞滿
+function fitZ(){return Math.max(minZoom(),VW/(FIT_BOX[1]-FIT_BOX[0]));}
 function resetCam(){tween=null;camSave=null;
-  if(VW<700){cam.z=Math.max(minZoom(),VW/500);cam.x=565;cam.y=425;}
-  else{cam.z=Math.min(1.35,Math.max(minZoom(),VW/950));cam.x=570;cam.y=385;}
+  if(VW<700){cam.z=fitZ();cam.x=(FIT_BOX[0]+FIT_BOX[1])/2;
+    const top=Math.max(64,(document.getElementById("top").getBoundingClientRect().bottom||60)+4);cam.y=(VH/2-top)/cam.z; // 場景上緣貼在標題列下方
+    cam._fit=cam.z;}
+  else{cam.z=Math.min(1.35,Math.max(minZoom(),VW/950));cam.x=570;cam.y=385;cam._fit=0;}
   clampCam();}
 const S2X=x=>(x-cam.x)*cam.z+VW/2, S2Y=y=>(y-cam.y)*cam.z+VH/2;
 const X2S=(px,py)=>[(px-VW/2)/cam.z+cam.x,(py-VH/2)/cam.z+cam.y];
@@ -483,7 +495,8 @@ const visitPt=e=>nearestWalk([e.seat[0]-50,e.seat[1]+34]);
 let status=null,statusSrc="內建";
 function applyStatus(d,src){
   status=d;statusSrc=src;
-  (d.employees||[]).forEach(s=>{const e=byId[s.id];if(!e)return;e.light=LIGHT[s.light]?s.light:"unknown";e.screen=s.screen||"";e.name=s.name||e.c.name;e.role=s.role||e.c.role;e.dept=s.dept||"";e.updated=s.updated||"";e.basis=s.basis||"";e.title=s.title||"";e.sub=s.sub||"";e.lines=Array.isArray(s.lines)?s.lines:[];e.state=s.state||"";e.verified=s.verified!==false;e.note=s.note||"";e.evidence=Array.isArray(s.evidence)?s.evidence:[];
+  (d.employees||[]).forEach(s=>{const e=byId[s.id];if(!e)return;e.light=LIGHT[s.light]?s.light:"unknown";if(TESTWORK){e.light="working";}if(TESTREST){e.light="idle";}e.screen=s.screen||"";e.name=s.name||e.c.name;e.role=s.role||e.c.role;e.dept=s.dept||"";e.updated=s.updated||"";e.basis=s.basis||"";e.title=s.title||"";e.sub=s.sub||"";e.lines=Array.isArray(s.lines)?s.lines:[];e.state=s.state||"";e.verified=s.verified!==false;e.note=s.note||"";e.evidence=Array.isArray(s.evidence)?s.evidence:[];
+    if(TESTWORK){e.mode="seated";e.pos=e.seat.slice();e.resting=false;e.placed=true;}
     if(!e.placed){e.placed=true;if(wantsRest(e)){e.mode="standing";e.pos=nearestWalk(REST[e.id]||e.seat).slice();e.resting=true;e.face=-1;}}});
   document.getElementById("asof").textContent="資料時間 "+(d.asOf||"?")+" · "+(src==="live"?"即時":"離線備援")+" · 每 60 秒更新";
   document.getElementById("top").classList.toggle("off",src!=="live");
@@ -541,6 +554,7 @@ function endMeeting(silent){const m=sched.meeting;if(!m)return;sched.meeting=nul
   m.ids.forEach((id,i)=>{const e=byId[id];e.meet=false;e.bubble=null;setTimeout(()=>{e.path=[];goHome(e,null);},i*300);});}
 
 function tickSched(dt){
+  if(TESTWORK)return;
   const m=sched.meeting;
   if(m){ if(m.src==="demo"&&now-m.t0>26)endMeeting();
     if(now>m.spkT){const list=m.ids.map(i=>byId[i]);const e=list[m.spk%list.length];m.spk++;m.spkT=now+3.4;
@@ -622,27 +636,41 @@ function drawSprite(e,t){
   ctx.restore();
   return {x:bx,y:by-h*an[1]*0.0,top:by-h*an[1],h,w,cx:bx+(seated?w*(0.5-an[0]):0)};}
 
-const TW=140,TH=92;
-function drawRestLabel(){const x=S2X(REST_LABEL[0]),y=S2Y(REST_LABEL[1]);ctx.save();ctx.font="700 11px "+FONT;const w=ctx.measureText("休息區").width+18;ctx.globalAlpha=.9;ctx.fillStyle="rgba(255,255,255,.85)";rr(x-w/2,y-9,w,18,9);ctx.fill();ctx.fillStyle="#6b5bd6";ctx.textBaseline="middle";ctx.textAlign="center";ctx.fillText("休息區",x,y+.5);ctx.restore();}
+
+function drawRestLabel(){const x=S2X(REST_LABEL[0]),y=S2Y(REST_LABEL[1]);ctx.save();ctx.font="700 11px "+FONT;const w=ctx.measureText("休息區").width+18;window.__restRect=[x-w/2,y-9,x+w/2,y+9];ctx.globalAlpha=.9;ctx.fillStyle="rgba(255,255,255,.85)";rr(x-w/2,y-9,w,18,9);ctx.fill();ctx.fillStyle="#6b5bd6";ctx.textBaseline="middle";ctx.textAlign="center";ctx.fillText("休息區",x,y+.5);ctx.restore();}
 /* 桌上電腦螢幕：把每位 BOT 目前真實的工作畫到場景裡的螢幕上（斜角貼圖） */
+const TW=108,TH=72,MONK=1.65;
+/* 螢幕放大：以畫面底邊(偏右 62%)為支點放大，蓋住場景圖裡原本的小螢幕，加黑色邊框 */
+function monQuad(q){const bl=q[3],br=q[2];const a=[bl[0]+(br[0]-bl[0])*.8,bl[1]+(br[1]-bl[1])*.8];return q.map(p=>[a[0]+(p[0]-a[0])*MONK,a[1]+(p[1]-a[1])*MONK]);}
 function drawMonitor(e,t){
-  const q=MON[e.id];if(!q)return;const z=cam.z,tl=q[0],tr=q[1],bl=q[3];
+  if(!MON[e.id])return;const q=monQuad(MON[e.id]);const z=cam.z,tl=q[0],tr=q[1],bl=q[3];
   const lc=LIGHT[e.light][0];
   ctx.save();
   ctx.setTransform(DPR*z*(tr[0]-tl[0])/TW,DPR*z*(tr[1]-tl[1])/TW,DPR*z*(bl[0]-tl[0])/TH,DPR*z*(bl[1]-tl[1])/TH,DPR*S2X(tl[0]),DPR*S2Y(tl[1]));
-  ctx.beginPath();ctx.rect(-2,-2,TW+4,TH+4);ctx.clip();
-  const gr=ctx.createLinearGradient(0,0,TW,TH);gr.addColorStop(0,"#071a3a");gr.addColorStop(1,e.light==="working"?"#0b3a66":"#13294d");ctx.fillStyle=gr;ctx.fillRect(-2,-2,TW+4,TH+4);
-  ctx.fillStyle=lc;ctx.fillRect(-2,-2,TW+4,18);
-  ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font="700 11px "+FONT;ctx.textAlign="left";ctx.fillText(e.name.length>7?e.name.slice(0,7):e.name,5,8);
-  ctx.textAlign="right";ctx.font="700 10px "+FONT;ctx.fillText(e.state||LIGHT[e.light][1],TW-5,8);ctx.textAlign="left";
-  ctx.textBaseline="top";ctx.fillStyle="#fff";ctx.font="700 14px "+FONT;
-  const tt=wrapText(e.title||e.screen||"",TW-12,2);tt.forEach((l,i)=>ctx.fillText(l,6,21+i*16));
-  let yy=21+tt.length*16+3;ctx.font="10.5px "+FONT;ctx.fillStyle="#bfe4ff";
-  const maxL=Math.max(0,Math.floor((TH-yy-12)/12.5));(e.lines||[]).slice(0,maxL).forEach((l,i)=>{let s=l;while(s.length&&ctx.measureText(s).width>TW-12)s=s.slice(0,-1);ctx.fillText(s,6,yy+i*12.5);});
-  if(e.light==="working"){const k=Math.floor(t*2)%2;if(k){ctx.fillStyle=lc;ctx.fillRect(6,TH-24,6,9);}}
-  ctx.font="8.5px "+FONT;ctx.textBaseline="alphabetic";
-  if(!e.verified||e.note){ctx.fillStyle="#ffb020";ctx.textAlign="right";ctx.fillText(e.verified?"部分未驗證":"未驗證",TW-4,TH-4);}else{ctx.fillStyle="rgba(127,243,255,.75)";ctx.textAlign="right";ctx.fillText("已核對 "+(e.updated||"").replace(/^\d+\/\d+\s*/,""),TW-4,TH-4);}
+  ctx.fillStyle="#0a101e";rr(-5,-5,TW+10,TH+10,5);ctx.fill();ctx.strokeStyle="#26354f";ctx.lineWidth=1.2;rr(-5,-5,TW+10,TH+10,5);ctx.stroke();
+  ctx.beginPath();ctx.rect(0,0,TW,TH);ctx.clip();
+  const gr=ctx.createLinearGradient(0,0,TW,TH);gr.addColorStop(0,"#071a3a");gr.addColorStop(1,e.light==="working"?"#0b3a66":"#13294d");ctx.fillStyle=gr;ctx.fillRect(0,0,TW,TH);
+  ctx.fillStyle=lc;ctx.fillRect(0,0,TW,14);
+  ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font="700 9px "+FONT;ctx.textAlign="left";const nm=e.name.replace(/^天睿顧問/,"");ctx.fillText(nm.length>7?nm.slice(0,7):nm,4,7.5);
+  ctx.textAlign="right";ctx.font="700 8px "+FONT;ctx.fillText(e.state||LIGHT[e.light][1],TW-4,7.5);ctx.textAlign="left";
+  ctx.textBaseline="top";ctx.fillStyle="#fff";ctx.font="700 11px "+FONT;
+  const tt=wrapText(e.title||e.screen||"",TW-9,2);tt.forEach((l,i)=>ctx.fillText(l,4.5,17+i*13));
+  let yy=17+tt.length*13+2;ctx.font="8.2px "+FONT;ctx.fillStyle="#bfe4ff";
+  const maxL=Math.max(0,Math.floor((TH-yy-9)/9.6));(e.lines||[]).slice(0,maxL).forEach((l,i)=>{let s=l;while(s.length&&ctx.measureText(s).width>TW-9)s=s.slice(0,-1);ctx.fillText(s,4.5,yy+i*9.6);});
+  if(e.light==="working"){const k=Math.floor(t*2)%2;if(k){ctx.fillStyle=lc;ctx.fillRect(TW-10,TH-17,4,7);}}
+  ctx.font="6.6px "+FONT;ctx.textBaseline="alphabetic";
+  if(!e.verified||e.note){ctx.fillStyle="#ffb020";ctx.textAlign="right";ctx.fillText(e.verified?"部分未驗證":"未驗證",TW-3,TH-2.5);}else{ctx.fillStyle="rgba(127,243,255,.75)";ctx.textAlign="right";ctx.fillText("已核對 "+(e.updated||"").replace(/^\d+\/\d+\s*/,""),TW-3,TH-2.5);}
   ctx.restore();}
+let _rsKey="",_rsShow=null;
+function syncRoster(){const el=document.getElementById("roster");if(!el)return;
+  const show=IS_MOB()&&cam._fit&&cam.z<cam._fit*1.25&&!selected&&!sched.meeting;
+  if(show!==_rsShow){_rsShow=show;el.style.display=show?"grid":"none";}
+  if(!show)return;
+  const bt=S2Y(SCENE_H)+4;const bb=document.getElementById("legend").getBoundingClientRect().top;const bts=document.getElementById("btns").getBoundingClientRect().top;
+  const bot=Math.min(bb,bts||bb)-8;el.style.top=Math.round(bt)+"px";el.style.height=Math.max(60,Math.round(bot-bt))+"px";
+  const key=emps.map(e=>e.id+e.light+e.state+e.title).join("|");if(key===_rsKey)return;_rsKey=key;
+  el.innerHTML=emps.map(e=>{const [lc,ll]=LIGHT[e.light];return '<div class="rc" data-id="'+e.id+'"><div class="n"><i style="background:'+lc+'"></i>'+esc(e.name.replace(/^天睿顧問/,""))+'<span style="color:'+lc+'">'+esc(e.state||ll)+'</span></div><div class="t">'+esc(e.title||e.role)+(e.verified?"":" ⚠")+'</div></div>';}).join("");
+  el.querySelectorAll(".rc").forEach(c=>c.onclick=()=>{const id=c.dataset.id;selected=id;updateSheet(true);const b=byId[id];focusCam(b.pos[0],b.pos[1]+(VH/2-VH*0.27)/Math.max(cam.z,1.0)-40,Math.max(cam.z,1.0));});}
 const hits=[];
 function drawFrame(t){
   ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -673,8 +701,9 @@ function drawFrame(t){
   // 白板會議指示
   if(sched.meeting){ctx.save();const x=S2X(WB[0]),y=S2Y(WB[1]);ctx.globalAlpha=.55+.25*Math.sin(t*4);ctx.strokeStyle="#7c5cff";ctx.lineWidth=3*cam.z;rr(x-62*cam.z,y-52*cam.z,124*cam.z,80*cam.z,6*cam.z);ctx.stroke();ctx.restore();}
   // 螢幕空間標籤
-  const showCards=cam.z>=0.9;
-  infos.forEach(([e,inf])=>drawTag(e,inf,showCards,t));
+  const showCards=cam.z>=0.9&&!IS_MOB();
+  layoutTags(infos,showCards).forEach(o=>drawTag(o.e,o.inf,o.g,t,o.dx,o.dy));
+  syncRoster();
   infos.forEach(([e,inf])=>{if(e.bubble)drawBubble(e,inf);});
   if(selected){const e=byId[selected];const x=S2X(e.pos[0]),y=S2Y(e.pos[1]);ctx.strokeStyle=LIGHT[e.light][0];ctx.lineWidth=2.2;ctx.setLineDash([5,4]);ctx.lineDashOffset=-t*18;ctx.beginPath();ctx.ellipse(x,y,36*cam.z,14*cam.z,0,0,7);ctx.stroke();ctx.setLineDash([]);}
   if(DEBUG){ctx.save();ctx.globalAlpha=.35;ctx.drawImage(window.__maskCanvas,S2X(0),S2Y(0),SCENE_W*cam.z,SCENE_H*cam.z);ctx.restore();
@@ -685,36 +714,54 @@ function drawFrame(t){
 function drawDoc(x,y,c,s,t){const X=S2X(x),Y=S2Y(y),k=cam.z*s;ctx.save();ctx.translate(X,Y);ctx.rotate(-0.15+Math.sin(t*5)*0.04);
   ctx.fillStyle="#fff";ctx.strokeStyle="rgba(40,50,90,.5)";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-8*k,-10*k);ctx.lineTo(4*k,-10*k);ctx.lineTo(8*k,-6*k);ctx.lineTo(8*k,10*k);ctx.lineTo(-8*k,10*k);ctx.closePath();ctx.fill();ctx.stroke();
   ctx.fillStyle=c;ctx.fillRect(-5*k,-5*k,10*k,2*k);ctx.fillStyle="#b9c2d9";ctx.fillRect(-5*k,-1*k,10*k,1.6*k);ctx.fillRect(-5*k,3*k,7*k,1.6*k);ctx.restore();}
-function drawTag(e,inf,showCards,t){
-  const lc=LIGHT[e.light][0];const x=S2X(inf.cx),yTop=S2Y(inf.top)-2;
-  // 名牌
-  ctx.font="700 "+(11)+"px "+FONT;const nm=e.name;const tw=ctx.measureText(nm).width;const w=tw+26,h=20;
-  const full=showCards&&!(e.resting&&e.mode!=="seated");const compact=!full;
-  let tx=x-w/2,ty=yTop-h-(compact?2:4);
-  if(e.mode!=="walking"&&(e.title||e.screen)&&!e.meet&&!e.bubble&&!(sched.meeting)){
-    if(full){
-      const cw=176;ctx.textBaseline="top";ctx.font="700 12px "+FONT;const tl=wrapText((e.title||"")+(e.verified?"":" ⚠"),cw-26,1);ctx.font="11px "+FONT;const lines=wrapText(e.sub||e.screen||"",cw-26,2);
-      const ch=10+16+lines.length*15+4;const cx=x-cw/2,cy=ty-ch-9;
-      ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=10;ctx.fillStyle="rgba(8,22,48,.92)";rr(cx,cy,cw,ch,8);ctx.fill();ctx.restore();
-      ctx.strokeStyle=lc;ctx.lineWidth=1.3;rr(cx,cy,cw,ch,8);ctx.stroke();
-      ctx.fillStyle=lc;ctx.fillRect(cx+8,cy+8,3,ch-16);
-      ctx.fillStyle="#fff";ctx.font="700 12px "+FONT;ctx.fillText(tl[0]||"",cx+16,cy+7);
-      ctx.fillStyle="#cfe6ff";ctx.font="11px "+FONT;lines.forEach((l,i)=>ctx.fillText(l,cx+16,cy+7+17+i*15));
-      ctx.fillStyle="rgba(8,22,48,.92)";ctx.beginPath();ctx.moveTo(x-6,cy+ch);ctx.lineTo(x+6,cy+ch);ctx.lineTo(x,cy+ch+7);ctx.fill();
-    }else if(e.title){
-      ctx.font="700 10.5px "+FONT;const tt=e.title+(e.verified?"":" ⚠");const cwid=ctx.measureText(tt).width+14,chh=17;const cx=x-cwid/2,cy=ty-chh-4;
-      ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=6;ctx.fillStyle="rgba(8,22,48,.9)";rr(cx,cy,cwid,chh,6);ctx.fill();ctx.restore();ctx.strokeStyle=lc;ctx.lineWidth=1.1;rr(cx,cy,cwid,chh,6);ctx.stroke();
-      ctx.fillStyle="#fff";ctx.textBaseline="middle";ctx.fillText(tt,cx+7,cy+chh/2+.5);
-    }
+const IS_MOB=()=>VW<700;
+function shortName(e){return IS_MOB()?e.name.replace(/^天睿顧問/,""):e.name;}
+function tagGeom(e,inf,showCards){
+  const mob=IS_MOB();ctx.font="700 "+(mob?10:11)+"px "+FONT;const nm=shortName(e);const tw=ctx.measureText(nm).width;const w=tw+(mob?21:26),h=mob?17:20;
+  const full=showCards&&!(e.resting&&e.mode!=="seated");
+  const x=S2X(inf.cx),yTop=S2Y(inf.top)-2;const ty=yTop-h-(full?4:2),tx=x-w/2;
+  const g={x,yTop,nm,w,h,tx,ty,full,mob,card:null,chip:null,x0:tx,x1:tx+w,y0:ty,y1:ty+h};
+  if(e.mode==="seated"&&(e.light==="waiting"||e.light==="blocked"||e.light==="unknown"))g.x1=tx+w+22;
+  if(e.mode!=="walking"&&(e.title||e.screen)&&!e.meet&&!e.bubble&&!sched.meeting){
+    if(full){const cw=176;ctx.textBaseline="top";ctx.font="700 12px "+FONT;const tl=wrapText((e.title||"")+(e.verified?"":" ⚠"),cw-26,1);ctx.font="11px "+FONT;const lines=wrapText(e.sub||e.screen||"",cw-26,2);
+      const ch=10+16+lines.length*15+4;const cx=x-cw/2,cy=ty-ch-9;g.card={cw,ch,cx,cy,tl,lines};g.x0=Math.min(g.x0,cx);g.x1=Math.max(g.x1,cx+cw);g.y0=cy;}
+    else if(e.title&&!mob){ctx.font="700 10.5px "+FONT;const tt=e.title+(e.verified?"":" ⚠");const cwid=ctx.measureText(tt).width+14,chh=17;const cx=x-cwid/2,cy=ty-chh-4;g.chip={tt,cwid,chh,cx,cy};g.x0=Math.min(g.x0,cx);g.x1=Math.max(g.x1,cx+cwid);g.y0=cy;}
   }
-  ctx.save();ctx.shadowColor="rgba(40,50,90,.25)";ctx.shadowBlur=6;ctx.fillStyle="rgba(255,255,255,.92)";rr(tx,ty,w,h,10);ctx.fill();ctx.restore();
-  ctx.fillStyle=lc;ctx.beginPath();ctx.arc(tx+10,ty+h/2,4,0,7);ctx.fill();
-  if(e.light==="working"){ctx.strokeStyle=lc;ctx.globalAlpha=.5*(1-(t*1.2%1));ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(tx+10,ty+h/2,4+(t*1.2%1)*6,0,7);ctx.stroke();ctx.globalAlpha=1;}
-  ctx.fillStyle="#1d2433";ctx.font="700 11px "+FONT;ctx.textBaseline="middle";ctx.fillText(nm,tx+19,ty+h/2+.5);
-  e._tag=[tx,ty,w,h];
-  // 狀態小圖示
+  return g;}
+/* 標籤防重疊：前排先放；後排的標籤若撞到就往上疊／往旁邊錯開，並畫一條細引線連回頭上 */
+function layoutTags(infos,showCards){
+  const gs=infos.map(([e,inf])=>({e,inf,g:tagGeom(e,inf,showCards),dx:0,dy:0}));
+  const placed=window.__restRect?[window.__restRect]:[];const step=IS_MOB()?18:23;
+  gs.slice().sort((a,b)=>b.inf.y-a.inf.y).forEach(o=>{const g=o.g;
+    const hit=(dx,dy)=>placed.some(r=>g.x0+dx<r[2]+2&&g.x1+dx>r[0]-2&&g.y0+dy<r[3]+2&&g.y1+dy>r[1]-2);
+    let base=0;if(g.x0<4)base=4-g.x0;else if(g.x1>VW-4)base=VW-4-g.x1;
+    const side=(g.x1-g.x0)/2+4;let best=null,bc=1e9;
+    for(let k=0;k<16;k++){for(const sx of [0,1,-1]){let dx=base+sx*side;if(g.x0+dx<4||g.x1+dx>VW-4)continue;const dy=-k*step;
+      if(hit(dx,dy))continue;const c=k*step+Math.abs(dx-base)*0.6;if(c<bc){bc=c;best={dx,dy};}}if(best&&bc<=k*step)break;}
+    if(!best)best={dx:base,dy:0};o.dx=best.dx;o.dy=best.dy;placed.push([g.x0+o.dx,g.y0+o.dy,g.x1+o.dx,g.y1+o.dy]);o.e._rect=placed[placed.length-1];});
+  return gs;}
+function drawTag(e,inf,g,t,dx,dy){
+  const lc=LIGHT[e.light][0];const x=g.x,yTop=g.yTop;const nm=g.nm,w=g.w,h=g.h,tx=g.tx,ty=g.ty;
+  if(dx||dy){ctx.save();ctx.strokeStyle=lc;ctx.globalAlpha=.8;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x+dx,ty+dy+h);ctx.lineTo(x,yTop+1);ctx.stroke();ctx.fillStyle=lc;ctx.beginPath();ctx.arc(x,yTop+1,2.2,0,7);ctx.fill();ctx.restore();}
+  ctx.save();ctx.translate(dx,dy);
+  if(g.card){const {cw,ch,cx,cy,tl,lines}=g.card;ctx.textBaseline="top";
+    ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=10;ctx.fillStyle="rgba(8,22,48,.92)";rr(cx,cy,cw,ch,8);ctx.fill();ctx.restore();
+    ctx.strokeStyle=lc;ctx.lineWidth=1.3;rr(cx,cy,cw,ch,8);ctx.stroke();
+    ctx.fillStyle=lc;ctx.fillRect(cx+8,cy+8,3,ch-16);
+    ctx.fillStyle="#fff";ctx.font="700 12px "+FONT;ctx.fillText(tl[0]||"",cx+16,cy+7);
+    ctx.fillStyle="#cfe6ff";ctx.font="11px "+FONT;lines.forEach((l,i)=>ctx.fillText(l,cx+16,cy+7+17+i*15));
+    ctx.fillStyle="rgba(8,22,48,.92)";ctx.beginPath();ctx.moveTo(x-6,cy+ch);ctx.lineTo(x+6,cy+ch);ctx.lineTo(x,cy+ch+7);ctx.fill();
+  }else if(g.chip){const {tt,cwid,chh,cx,cy}=g.chip;ctx.font="700 10.5px "+FONT;
+    ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=6;ctx.fillStyle="rgba(8,22,48,.9)";rr(cx,cy,cwid,chh,6);ctx.fill();ctx.restore();ctx.strokeStyle=lc;ctx.lineWidth=1.1;rr(cx,cy,cwid,chh,6);ctx.stroke();
+    ctx.fillStyle="#fff";ctx.textBaseline="middle";ctx.fillText(tt,cx+7,cy+chh/2+.5);}
+  ctx.save();ctx.shadowColor="rgba(40,50,90,.25)";ctx.shadowBlur=6;ctx.fillStyle="rgba(255,255,255,.94)";rr(tx,ty,w,h,h/2);ctx.fill();ctx.restore();
+  ctx.fillStyle=lc;ctx.beginPath();ctx.arc(tx+9,ty+h/2,g.mob?3.5:4,0,7);ctx.fill();
+  if(e.light==="working"){ctx.strokeStyle=lc;ctx.globalAlpha=.5*(1-(t*1.2%1));ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(tx+9,ty+h/2,4+(t*1.2%1)*6,0,7);ctx.stroke();ctx.globalAlpha=1;}
+  ctx.fillStyle="#1d2433";ctx.font="700 "+(g.mob?10:11)+"px "+FONT;ctx.textBaseline="middle";ctx.textAlign="left";ctx.fillText(nm,tx+(g.mob?16:19),ty+h/2+.5);
+  e._tag=[tx+dx,ty+dy,w,h];
   if(!e.bubble&&e.mode==="seated"&&(e.light==="waiting"||e.light==="blocked"||e.light==="unknown")){
     const s=e.light==="waiting"?"…":e.light==="blocked"?"!":"?";const bx=x+w/2+6,by=ty+2;ctx.fillStyle=lc;ctx.beginPath();ctx.arc(bx,by+8,9,0,7);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 13px "+FONT;ctx.textAlign="center";ctx.fillText(s,bx,by+9);ctx.textAlign="left";}
+  ctx.restore();
 }
 function drawBubble(e,inf){
   const b=e.bubble;ctx.font="600 12px "+FONT;const lines=wrapText(b.text,150,3);const lw=Math.max(...lines.map(l=>ctx.measureText(l).width));const w=lw+20,h=lines.length*16+12;
