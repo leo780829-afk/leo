@@ -39,9 +39,11 @@ html,body{margin:0;height:100%;overflow:hidden;background:#d3d4d9;font-family:"P
 #panel h3{margin:0 0 10px;font-size:16px}
 #panel .it{border-top:1px solid #e6e9f2;padding:8px 0;font-size:12.5px;line-height:1.5}
 #panel .it b{color:#4b3fd1;margin-right:6px}
+#panel .emp{border-top:1px solid #e6e9f2;padding:9px 0;font-size:13px;line-height:1.5}#panel .emp .h{display:flex;align-items:center;gap:7px}#panel .emp .h i{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}#panel .emp .h b{font-size:14px}#panel .emp .h span{margin-left:auto;font-size:11px;color:#fff;padding:1px 8px;border-radius:99px}#panel .emp .t{font-weight:700;color:#26304a;margin-top:2px}#panel .emp .s{color:#4a5570}#panel .emp .m{font-size:11px;color:#8a93a8}#panel .emp .w{font-size:11px;color:#b36b00}
+#sheet ul{margin:6px 0 0;padding-left:18px}#sheet .task .tt{font-weight:700;font-size:15px;margin-bottom:3px}#sheet .ev{font-size:11px;color:#68718a;word-break:break-all}#sheet .warn{color:#b36b00;font-weight:700}#sheet .ok{color:#14915f;font-weight:700}
 #panel .it em{font-style:normal;float:right;font-size:11px;color:#8a93a8}
 @media (min-width:900px){#ticker{display:block}}
-@media (max-width:520px){#top h1{font-size:14px}#top small{font-size:10.5px}.b{min-width:0;padding:7px 11px;font-size:12px}#btns{flex-direction:row;top:auto;bottom:calc(64px + env(safe-area-inset-bottom));left:10px;right:10px;justify-content:center}#legend{font-size:10.5px;gap:7px}}
+@media (max-width:520px){#top h1{font-size:14px}#top small{font-size:10.5px}.b{min-width:0;padding:7px 9px;font-size:12px}#btns{flex-direction:row;flex-wrap:wrap;top:auto;bottom:calc(64px + env(safe-area-inset-bottom));left:6px;right:6px;justify-content:center;gap:6px}#legend{font-size:10.5px;gap:7px}}
 </style>
 </head>
 <body>
@@ -51,6 +53,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#d3d4d9;font-family:"P
 <div id="btns">
   <button class="b glass" id="bHand">示範交接</button>
   <button class="b glass" id="bMeet">示範開會</button>
+  <button class="b glass" id="bAll">全員進度</button>
   <button class="b glass" id="bRout">今日排程</button>
   <button class="b glass" id="bReset">重設視角</button>
 </div>
@@ -61,7 +64,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#d3d4d9;font-family:"P
 "use strict";
 /* ================= 資料 ================= */
 const EMBEDDED = {
- "asOf": "10/28 05:15（台北時間）",
+ "asOf": "10/28 23:35（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -69,9 +72,23 @@ const EMBEDDED = {
    "role": "協調總管",
    "dept": "管理部",
    "light": "working",
-   "screen": "同步 Leo 電腦已回補的 1 分K（含下市股）與加權指數 1 分K 到 box，並備妥今日排程",
-   "updated": "10/28 04:20",
-   "basis": "MeiMei 自己回報"
+   "state": "協調中",
+   "title": "協調・排K2P重跑",
+   "sub": "K2P抓到124/554；10/29 08:44重跑",
+   "screen": "協調各 BOT 並排程：今晚 K2P 逐筆抓取只完成 124／554 筆（額度用完），已排 10/29 08:44 在 Leo 桌機重跑，結果交書妍；另有 22:03 BOT 狀態巡檢。",
+   "lines": [
+    "K2P 完成124/554",
+    "10/29 08:44重跑",
+    "巡檢 22:03(回報)",
+    "結果交給書妍"
+   ],
+   "basis": "k2p_result.md 檔案時間；巡檢與重跑排程為 MeiMei 自行回報",
+   "updated": "10/28 22:21",
+   "verified": true,
+   "note": "22:03 巡檢、10/29 08:44 重跑排程：查不到檔案可核對（依 MeiMei 回報）",
+   "evidence": [
+    "K2P 抓取結果報告（k2p_result.md）· 10/28 22:21"
+   ]
   },
   {
    "id": "alfred",
@@ -79,49 +96,124 @@ const EMBEDDED = {
    "role": "營運顧問",
    "dept": "管理部",
    "light": "idle",
-   "screen": "等 12:00 收到第一份每日官方 LINE 整理",
-   "updated": "10/28 04:20",
-   "basis": "MeiMei 回報"
+   "state": "待命",
+   "title": "寒假招生草稿",
+   "sub": "草稿與警訊完成；下次巡查10/29 13:00",
+   "screen": "民德國中部寒假招生方案草稿（76→100 人次）與國小部離班／新進警訊都已完成；21:00 巡查沒有新異常，下次巡查 10/29 13:00。",
+   "lines": [
+    "寒假招生草稿",
+    "國小部離班警訊",
+    "21:00巡查無新異常",
+    "下次10/29 13:00"
+   ],
+   "basis": "/workspace/tianrui 與 /workspace/patrol 檔案時間",
+   "updated": "10/28 22:05",
+   "verified": true,
+   "note": "下次巡查 10/29 13:00：為排程回報，查不到檔案可核對",
+   "evidence": [
+    "寒假招生方案草稿（寒假招生方案_草稿.md）· 10/28 20:16",
+    "國小部離班與新進警訊（國小部離班與新進警訊.md）· 10/28 22:05",
+    "21:00 巡查基準（baseline-2026-10-28-2100.md）· 10/28 21:17"
+   ]
   },
   {
    "id": "buffett",
    "name": "承遠",
    "role": "價值投資顧問",
    "dept": "投資研究部",
-   "light": "unknown",
-   "screen": "未確認（新分工中退居顧問，不在主流程）",
-   "updated": "未確認",
-   "basis": "目前查不到可驗證的最新動態"
+   "light": "waiting",
+   "state": "等Leo決定",
+   "title": "ETF定期定額單",
+   "sub": "細節單完成；v3決策單7題等你答",
+   "screen": "0050／006208 定期定額執行細節單已完成；價值選股線 v3 決策單有 7 題，等 Leo 回覆後才能定稿。",
+   "lines": [
+    "0050 vs 006208",
+    "執行細節單完成",
+    "v3決策單7題",
+    "等 Leo 決定"
+   ],
+   "basis": "specs 檔案時間；決策單內 7 個編號題目已數過",
+   "updated": "10/28 22:08",
+   "verified": true,
+   "evidence": [
+    "ETF 定期定額執行細節單（etf_dca_0050_vs_006208.md）· 10/28 22:08",
+    "v3 決策單（buffett_v3_decisions_for_leo.md）· 10/28 20:04"
+   ]
   },
   {
    "id": "four",
    "name": "以恆",
    "role": "波段研究員",
    "dept": "投資研究部",
-   "light": "working",
-   "screen": "撰寫非當沖、事前註冊的波段策略規格；新分工後專責短線波段研究，XQ 腳本草稿依 Leo 指示暫停",
-   "updated": "10/28 04:25",
-   "basis": "swing_spec_s1s2.md 檔案時間"
+   "light": "waiting",
+   "state": "等Leo決定",
+   "title": "低週轉提案v5",
+   "sub": "複審無規則缺口；8題待Leo決定",
+   "screen": "低週轉波段提案 v5：書妍 22:05 複審結論為已無規則缺口；提案 §7 列出 8 題等 Leo 決定（現金月計法、前測期限、資料來源等）。P1 庫藏股 D0 可行性報告已完成（歷史資料被 MOPS 擋、拿不到）。",
+   "lines": [
+    "提案v5 複審已過",
+    "P1庫藏股D0 已完成",
+    "歷史公告被MOPS擋",
+    "§7 待決8題"
+   ],
+   "basis": "specs 檔案時間；提案 §7 編號 1–8 為待決（第 9 項已定案）",
+   "updated": "10/28 22:05",
+   "verified": true,
+   "evidence": [
+    "低週轉提案 v5（swing_proposal_lowturnover_2026-10-28.md）· 10/28 19:16",
+    "書妍 v5 複審（review_lowturnover_v5_2026-10-28.md）· 10/28 22:05",
+    "P1 庫藏股 D0 報告（p1_buyback_d0_feasibility.md）· 10/28 22:04"
+   ]
   },
   {
    "id": "daytrade",
    "name": "子睿",
    "role": "當沖研究員",
    "dept": "投資研究部",
-   "light": "working",
-   "screen": "高波動個股當沖規格 daytrade_highvol_v1 已送驗證",
-   "updated": "10/28 04:44",
-   "basis": "台股當沖研究員回報"
+   "light": "waiting",
+   "state": "等Leo選",
+   "title": "午盤RS 4選項",
+   "sub": "A–D選項已寫好；建議A，等你選",
+   "screen": "午盤 RS 當沖：四個選項（A 等 1 分K 回補再測、B 改日K、C 探索試跑、D 放棄換題）的說明已寫好，子睿建議 A；等 Leo 選。",
+   "lines": [
+    "A 等1分K(建議)",
+    "B 日K版 不建議",
+    "C 試跑 不建議",
+    "D 放棄換新題"
+   ],
+   "basis": "specs 檔案時間與檔內選項 A–D",
+   "updated": "10/28 22:04",
+   "verified": true,
+   "evidence": [
+    "午盤 RS 選項說明（DRAFT_daytrade_rs_afternoon_options.md）· 10/28 22:04"
+   ]
   },
   {
    "id": "researcher",
    "name": "書妍",
    "role": "回測驗證員",
    "dept": "投資研究部",
-   "light": "working",
-   "screen": "「穩定獲利」門檻提案已寫好，等 Leo 過目；整理方案 A 每檔需補抓的月份清單；V5 仍卡在 1 分K 覆蓋率未達 95%",
-   "updated": "10/28 約 04:40",
-   "basis": "台股回測驗證員回報（時間為大約）"
+   "light": "waiting",
+   "state": "等資料",
+   "title": "VWAP回測備料",
+   "sub": "程式已備；1分K覆蓋未過，等補抓",
+   "screen": "foreign_pullback（VWAP）正式回測程式已備好但尚未開 IS：1 分K 覆蓋率閘門目前未過，待補抓 739 個股票月；K2P 重跑排 10/29 08:44；22:05 已完成低週轉 v5 複審。",
+   "lines": [
+    "foreign_pullback",
+    "1分K覆蓋 未過",
+    "待補739股票月",
+    "K2P 10/29 重跑"
+   ],
+   "basis": "backtest27_foreign_pullback 檔案時間；覆蓋率閘門 FAIL、清單 739 列已讀檔確認",
+   "updated": "10/28 22:05",
+   "verified": true,
+   "note": "盤前報告排程、10/29 08:44 K2P 重跑：查不到檔案可核對（依 MeiMei 回報）",
+   "evidence": [
+    "回測程式說明（README_FP.md）· 10/28 18:35",
+    "1分K覆蓋率報告（coverage.md）· 10/28 18:34",
+    "待補抓清單(739列)（backfill_not_in_planA.csv）· 10/28 18:32",
+    "低週轉 v5 複審（review_lowturnover_v5_2026-10-28.md）· 10/28 22:05"
+   ]
   },
   {
    "id": "ip",
@@ -129,77 +221,134 @@ const EMBEDDED = {
    "role": "IP小編",
    "dept": "內容工作室",
    "light": "waiting",
-   "screen": "已收到 58 張精選照片；定位的 5 個問題等 Leo 回覆；第一週內容計畫為草稿，尚未發布",
-   "updated": "10/28 04:17",
-   "basis": "ip-plan 檔案時間與 MeiMei 回報"
+   "state": "等羽球Reel",
+   "title": "11/9週Threads稿",
+   "sub": "3則草稿完成；貼文暫停，等羽球Reel",
+   "screen": "11/9–11/15 週 Threads 文字草稿 3 則已寫好（未發布）；依 Leo 10/28 的指示貼文先不做，目前 Reel 只用羽球影片，等品安交片後她再配文案、排時段。",
+   "lines": [
+    "Threads 3則草稿",
+    "未發布",
+    "貼文暫停(Leo)",
+    "等羽球Reel"
+   ],
+   "basis": "ip-plan 檔案時間；草稿檔內 3 則已數過",
+   "updated": "10/28 20:03",
+   "verified": true,
+   "note": "「等品安的 Reel」為語彤回報，查不到檔案可核對",
+   "evidence": [
+    "Threads 草稿（threads_drafts.md）· 10/28 20:03"
+   ]
   },
   {
    "id": "badminton",
    "name": "品安",
    "role": "羽球剪輯師",
    "dept": "內容工作室",
-   "light": "working",
-   "screen": "Leo 已接洽；工作資料夾 badminton/v3 剛產出第 3 版影片檔，是否定稿未確認",
-   "updated": "10/28 04:27",
-   "basis": "badminton/v3 檔案時間"
+   "light": "idle",
+   "state": "休息中",
+   "title": "休息中",
+   "sub": "依 Leo 指示休息，沒有進行中的工作",
+   "screen": "依 Leo 指示休息，目前沒有進行中的工作。工作資料夾最近一次修改是羽球候選片段 shortlist。",
+   "lines": [
+    "依 Leo 指示休息",
+    "沒有進行中工作",
+    "最近作業:羽球",
+    "候選片段shortlist"
+   ],
+   "basis": "badminton/shortlist 檔案時間",
+   "updated": "10/28 16:08",
+   "verified": true,
+   "note": "「休息中」為 Leo 指示（MeiMei 回報），查不到檔案可核對",
+   "evidence": [
+    "羽球候選片段清單（shortlist.md）· 10/28 16:08"
+   ]
   },
   {
    "id": "math",
    "name": "若晴",
    "role": "數學助教",
    "dept": "內容工作室",
-   "light": "unknown",
-   "screen": "未確認（最近的講義檔案 out_3b 為 01:44）",
-   "updated": "未確認",
-   "basis": "僅有檔案時間可參考"
+   "light": "working",
+   "state": "製作中",
+   "title": "國三上第2章講義",
+   "sub": "第1章完成(各116頁)；第2章製作中",
+   "screen": "國三上第 1 章（相似形）學生版、教師版各 116 頁已完成，297 題答案全部重算、0 個錯誤；現在接著做第 2 章，檔案仍在產出，尚無成品。",
+   "lines": [
+    "第1章 相似形 完成",
+    "學生/教師版各116頁",
+    "297題 重算0錯誤",
+    "第2章 製作中"
+   ],
+   "basis": "out_3a1 檔案時間與 pdfinfo 頁數；build_3a2 最新檔案時間",
+   "updated": "10/28 23:31",
+   "verified": true,
+   "evidence": [
+    "第1章 學生版 PDF（1_【優化版】國三上第1章_相似形_學生版.pdf）· 10/28 22:52",
+    "第1章 審查紀錄（審查紀錄_國三上第1章.md）· 10/28 22:53",
+    "第2章 製作程式(最新檔)（fit.log）· 10/28 23:31"
+   ]
   }
  ],
  "routines": [
   {
-   "time": "12:00",
-   "name": "官方 LINE 每日訊息整理",
-   "detail": "唯讀、5 個帳號、不擬回覆；整理客訴、超過 24 小時未回覆與重要事項，傳給 Leo，同一份也給天睿顧問Alfred",
-   "status": "待執行"
-  },
-  {
-   "time": "12:20",
-   "name": "Shioaji 檢查",
-   "detail": "既有排程，細節未確認",
-   "status": "待執行"
-  },
-  {
-   "time": "13:18",
-   "name": "Shioaji 跌停價 ROD 加測（一次性）",
-   "detail": "先唯讀檢查電腦的睡眠與 Windows Update 設定；13:20–13:25 以模擬單賣出 1 張 2884 跌停價 ROD，未成交即取消",
-   "status": "待執行"
-  },
-  {
    "time": "20:30",
    "name": "Leo 電腦 1 分K 回補",
-   "detail": "Leo 已同意改用方案 A（每檔只抓前 100 名的月份）；月份清單整理中，抓取腳本尚未調整",
-   "status": "待執行"
+   "detail": "已跑完（LastTaskResult 0，見 K2P 結果報告）",
+   "status": "已完成"
+  },
+  {
+   "time": "21:00",
+   "name": "Alfred 巡查",
+   "detail": "已產出 21:12 基準檔，營運中樞與米豆奶數字與 13:00 相同",
+   "status": "已完成"
   },
   {
    "time": "22:00",
    "name": "Shioaji K2P 逐筆抓取（一次性）",
-   "detail": "抓開盤 554 分鐘與 1–2 檔下市櫃股，上限約 80 MB，結果交給台股回測驗證員",
+   "detail": "額度用完，只完成 124／554 筆（83 筆有資料、41 筆回 0 筆）",
+   "status": "部分完成"
+  },
+  {
+   "time": "22:03",
+   "name": "BOT 狀態巡檢",
+   "detail": "MeiMei 回報已執行（無檔案可核對）",
+   "status": "未驗證"
+  },
+  {
+   "time": "10/29 08:44",
+   "name": "K2P 重跑（Leo 同意）",
+   "detail": "Leo 桌機：先測 5371、6238，再抓剩餘約 430 筆，最後重測 41 筆 0 筆；間隔 1 秒、剩 <10 MB 即停、20:30 回補前結束",
+   "status": "已排程（回報）"
+  },
+  {
+   "time": "10/29 13:00",
+   "name": "Alfred 巡查",
+   "detail": "下次例行巡查（排程回報）",
    "status": "待執行"
   },
   {
    "time": "未確認",
-   "name": "BOT 巡檢、每日搬移、信箱整理、掛單收盤、TimeTree、FedEx、Tesla",
-   "detail": "既有排程，今日執行時間未確認",
+   "name": "書妍 盤前報告",
+   "detail": "查不到排程檔案，時間未確認",
    "status": "未確認"
   }
  ],
  "handoffs": [
   {
-   "from": "daytrade",
-   "to": "researcher",
-   "item": "高波動當沖規格 daytrade_highvol_v1",
-   "at": "10/28 04:44",
+   "from": "researcher",
+   "to": "four",
+   "item": "低週轉提案 v5 複審結論",
+   "at": "10/28 22:05",
    "state": "sent",
-   "note": "已送驗證"
+   "note": "書妍複審完成，已無規則缺口"
+  },
+  {
+   "from": "meimei",
+   "to": "researcher",
+   "item": "K2P 逐筆抓取結果（124／554）",
+   "at": "10/28 22:21",
+   "state": "sent",
+   "note": "已交報告"
   }
  ],
  "meeting": {
@@ -208,9 +357,16 @@ const EMBEDDED = {
   "topic": ""
  },
  "_schema_notes": {
-  "handoffs": "選填。每筆 {from,to,item,at,state}；from/to 為員工 id。動畫會依最近的交接紀錄播放（送件→走到對方桌前→說話）。",
-  "meeting": "選填。active=true 時 attendees（員工 id 陣列，空陣列＝全員）會走到白板開會，topic 顯示在對話泡泡。",
-  "light": "working / idle / waiting / blocked / unknown"
+  "light": "working / idle / waiting / blocked / unknown。idle 與 waiting 會自動走到休息區坐/站著。",
+  "title": "≤10 字，顯示在螢幕與頭上標籤",
+  "sub": "≤24 字，顯示在頭上卡片與大螢幕",
+  "lines": "最多 4 行、每行 ≤12 字，顯示在桌上電腦螢幕",
+  "state": "短狀態字（≤6 字），如 製作中／等Leo決定",
+  "verified": "false＝完全沒有檔案可核對",
+  "note": "部分內容查不到檔案時的說明（橘色警示）",
+  "evidence": "檔案名稱與修改時間（供點開 BOT 時顯示）",
+  "handoffs": "選填。每筆 {from,to,item,at,state}；from/to 為員工 id。",
+  "meeting": "選填。active=true 時全員到白板開會。"
  }
 };
 const SCENE_W=1280, SCENE_H=720;
@@ -233,6 +389,11 @@ const COFFEE=[890,150], SOFA=[1010,372], PLANT=[1120,470], WINDOW=[330,560];
 const MEET_SPOTS=[[971,246],[1011,266],[1051,286],[954,273],[994,293],[1034,313],[909,288],[949,308],[989,328]];
 const WB=[1056,194]; // 白板
 const IDLE_SPOTS=[COFFEE,SOFA,PLANT,WINDOW];
+/* 休息區：待命/等待/閒置的 BOT 會站在這裡（每人固定一格，不重疊） */
+const REST={alfred:[835,368],buffett:[915,368],four:[995,368],daytrade:[875,430],researcher:[955,430],ip:[860,510],badminton:[940,510],meimei:[1020,430],math:[780,510]};
+const REST_LABEL=[1030,398];
+/* 每張桌上螢幕的四角（場景座標：左上、右上、右下、左下），由場景圖偵測藍色螢幕取得 */
+const MON={"meimei": [[587.0, 211.5], [618.0, 202.5], [618.5, 223.5], [587.5, 233.0]], "alfred": [[431.4, 258.7], [466.9, 247.1], [467.4, 270.4], [432.4, 282.0]], "four": [[272.0, 308.5], [307.5, 297.5], [309.0, 320.0], [273.5, 327.5]], "daytrade": [[347.0, 398.0], [384.5, 386.0], [385.5, 409.5], [349.0, 422.0]], "researcher": [[520.0, 339.0], [555.0, 327.5], [555.5, 350.5], [521.5, 362.5]], "buffett": [[438.5, 491.0], [477.5, 477.5], [478.5, 502.5], [440.5, 516.0]], "ip": [[679.0, 284.5], [711.5, 274.5], [711.0, 296.5], [679.5, 307.0]], "badminton": [[613.0, 427.0], [649.0, 415.0], [649.0, 439.0], [613.0, 452.0]], "math": [[776.0, 363.0], [809.5, 351.5], [809.5, 375.0], [776.0, 387.0]]};
 
 /* ================= 畫布與相機 ================= */
 const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
@@ -312,7 +473,7 @@ function findPath(from,to){
 
 /* ================= 員工物件 ================= */
 const emps=[];const byId={};
-function mkEmp(id){const c=CAST[id];const e={id,c,seat:c.seat.slice(),pos:c.seat.slice(),mode:"seated",path:[],face:-1,light:"unknown",screen:"",name:c.name,role:c.role,dept:"",updated:"",basis:"",
+function mkEmp(id){const c=CAST[id];const e={id,c,seat:c.seat.slice(),pos:c.seat.slice(),mode:"seated",path:[],face:-1,light:"unknown",screen:"",name:c.name,role:c.role,dept:"",updated:"",basis:"",title:"",sub:"",note:"",lines:[],state:"",verified:true,evidence:[],resting:false,placed:false,
   bob:Math.random()*6,bubble:null,doc:null,job:null,q:[],wait:0,pop:0,cup:false,phase:Math.random()*10,spark:0};
   emps.push(e);byId[id]=e;return e;}
 Object.keys(CAST).forEach(mkEmp);
@@ -322,7 +483,8 @@ const visitPt=e=>nearestWalk([e.seat[0]-50,e.seat[1]+34]);
 let status=null,statusSrc="內建";
 function applyStatus(d,src){
   status=d;statusSrc=src;
-  (d.employees||[]).forEach(s=>{const e=byId[s.id];if(!e)return;e.light=LIGHT[s.light]?s.light:"unknown";e.screen=s.screen||"";e.name=s.name||e.c.name;e.role=s.role||e.c.role;e.dept=s.dept||"";e.updated=s.updated||"";e.basis=s.basis||"";});
+  (d.employees||[]).forEach(s=>{const e=byId[s.id];if(!e)return;e.light=LIGHT[s.light]?s.light:"unknown";e.screen=s.screen||"";e.name=s.name||e.c.name;e.role=s.role||e.c.role;e.dept=s.dept||"";e.updated=s.updated||"";e.basis=s.basis||"";e.title=s.title||"";e.sub=s.sub||"";e.lines=Array.isArray(s.lines)?s.lines:[];e.state=s.state||"";e.verified=s.verified!==false;e.note=s.note||"";e.evidence=Array.isArray(s.evidence)?s.evidence:[];
+    if(!e.placed){e.placed=true;if(wantsRest(e)){e.mode="standing";e.pos=nearestWalk(REST[e.id]||e.seat).slice();e.resting=true;e.face=-1;}}});
   document.getElementById("asof").textContent="資料時間 "+(d.asOf||"?")+" · "+(src==="live"?"即時":"離線備援")+" · 每 60 秒更新";
   document.getElementById("top").classList.toggle("off",src!=="live");
   buildTicker();updateSheet();syncMeeting();
@@ -332,6 +494,12 @@ function buildTicker(){const hs=(status&&status.handoffs)||[];const t=document.g
   t.textContent="最近交接："+(a?a.name:h.from)+" → "+(b?b.name:h.to)+"　"+(h.item||"")+(h.at?"（"+h.at+"）":"");t.style.display="";}
 async function poll(){try{const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();if(!d||!Array.isArray(d.employees))throw 0;applyStatus(d,"live");}catch(e){if(!status)applyStatus(EMBEDDED,"fallback");else applyStatus(status,"fallback");}}
 
+/* ================= 休息區 ================= */
+function wantsRest(e){return e.light==="idle"||e.light==="waiting";}
+function goToRest(e){const sp=nearestWalk(REST[e.id]||IDLE_SPOTS[0]);e.resting=true;goTo(e,sp,()=>{e.face=-1;e.pos=sp.slice();});}
+function restTick(){if(sched.meeting)return;emps.forEach(e=>{if(e.meet||e.job)return;
+  if(wantsRest(e)){if(e.mode==="seated")goToRest(e);}
+  else if(e.resting&&e.mode==="standing"&&!e.path.length){e.resting=false;goHome(e);}});}
 /* ================= 動作排程 ================= */
 let sched={t:6,hq:[],meeting:null,demoMeet:0};
 function say(e,text,dur,kind){e.bubble={text,until:now+dur,kind:kind||"say"};}
@@ -382,16 +550,13 @@ function tickSched(dt){
   if(sched.t<=0){sched.t=14+Math.random()*10;
     // 交接回放
     const hs=nextHandoffs();if(hs.length&&Math.random()<0.8){const h=hs[(sched.hq.length)%hs.length];sched.hq.push(1);playHandoff(h);}
-    // 閒置員工散步
-    emps.forEach(e=>{ if(e.light==="idle"&&!busy(e)&&Math.random()<0.7){const sp=IDLE_SPOTS[(Math.random()*IDLE_SPOTS.length)|0];
-        goTo(e,nearestWalk(sp),()=>{e.cup=(sp===COFFEE);say(e,sp===COFFEE?"來杯咖啡":"稍微休息一下",2600);setTimeout(()=>{if(!e.meet&&!e.job){goHome(e);}},5200+Math.random()*3000);});}});
   }
 }
 
 /* ================= 更新 ================= */
-let now=0,last=0;const parts=[];
+let now=0,last=0,restT=1;const parts=[];
 function update(dt){
-  now+=dt;stepTween(dt);tickSched(dt);
+  now+=dt;stepTween(dt);tickSched(dt);restT-=dt;if(restT<=0){restT=1;restTick();}
   emps.forEach(e=>{
     if(e.pop>0)e.pop-=dt;
     if(e.mode==="walking"){
@@ -408,7 +573,7 @@ function update(dt){
 }
 
 /* ================= 繪製 ================= */
-function sprOf(e){const seated=e.mode==="seated";const k=e.c.sp+(seated?"_seat":"");const im=(e.light==="unknown"&&seated)?grayOf(k):IMG[k];return {im,seated};}
+function sprOf(e){const seated=e.mode==="seated";const k=e.c.sp+(seated?"_seat":"");const im=IMG[k];return {im,seated};}
 function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
 const FONT='"PingFang TC","Noto Sans TC","Noto Sans CJK TC","Microsoft JhengHei",system-ui,sans-serif';
 function wrapText(t,maxW,maxLines){const lines=[];let cur="";for(const ch of t){if(ctx.measureText(cur+ch).width>maxW){lines.push(cur);cur=ch;if(lines.length>=maxLines)break;}else cur+=ch;}
@@ -428,8 +593,11 @@ function drawWallScreen(t){
   // 輪播
   const page=Math.floor(t/5)%3;const list=emps.slice(page*3,page*3+3);
   list.forEach((e,i)=>{const y=72+i*40;ctx.fillStyle="rgba(255,255,255,.07)";rr(10,y-4,W-20,36,6);ctx.fill();ctx.fillStyle=LIGHT[e.light][0];ctx.fillRect(10,y-4,4,36);
-    ctx.fillStyle="#fff";ctx.font="700 14px "+FONT;ctx.fillText(e.name,22,y+6);ctx.fillStyle="#b9d6ff";ctx.font="12px "+FONT;
-    let s=e.screen||"";while(s.length&&ctx.measureText(s).width>W-40)s=s.slice(0,-1);if(s.length<(e.screen||"").length)s+="…";ctx.fillText(s,22,y+23);});
+    ctx.fillStyle="#fff";ctx.font="700 14px "+FONT;ctx.fillText(e.name,22,y+6);const nw=ctx.measureText(e.name).width;
+    ctx.fillStyle="#7ff3ff";ctx.font="700 13px "+FONT;let tt=e.title||"";while(tt.length&&ctx.measureText(tt).width>W-60-nw-60)tt=tt.slice(0,-1);ctx.fillText(tt,22+nw+10,y+6);
+    ctx.fillStyle=LIGHT[e.light][0];ctx.font="700 11px "+FONT;ctx.textAlign="right";ctx.fillText((e.state||LIGHT[e.light][1]),W-18,y+6);ctx.textAlign="left";
+    ctx.fillStyle="#b9d6ff";ctx.font="12px "+FONT;
+    let s=e.sub||e.screen||"";while(s.length&&ctx.measureText(s).width>W-40)s=s.slice(0,-1);if(s.length<(e.sub||e.screen||"").length)s+="…";ctx.fillText(s,22,y+23);});
   ctx.fillStyle="rgba(127,243,255,.7)";for(let i=0;i<3;i++){ctx.fillRect(W-50+i*14,H-14,10,5);if(i===page){ctx.fillStyle="#7ff3ff";ctx.fillRect(W-50+i*14,H-14,10,5);ctx.fillStyle="rgba(127,243,255,.7)";}}
   ctx.restore();ctx.setTransform(DPR,0,0,DPR,0,0);}
 
@@ -450,11 +618,31 @@ function drawSprite(e,t){
   ctx.fillStyle="rgba(30,35,70,.22)";ctx.beginPath();ctx.ellipse(seated?4:0,seated?-2:0,seated?30:22*(1-hop/40),seated?11:7,0,0,7);ctx.fill();
   ctx.translate(0,-hop);ctx.rotate(rot);ctx.scale(sx,sy);
   const flip=(!seated&&e.face>0)?-1:1;ctx.scale(flip,1);
-  if(e.light==="unknown"&&seated)ctx.globalAlpha=.78;
   ctx.drawImage(im,-w*an[0],-h*an[1],w,h);
   ctx.restore();
   return {x:bx,y:by-h*an[1]*0.0,top:by-h*an[1],h,w,cx:bx+(seated?w*(0.5-an[0]):0)};}
 
+const TW=140,TH=92;
+function drawRestLabel(){const x=S2X(REST_LABEL[0]),y=S2Y(REST_LABEL[1]);ctx.save();ctx.font="700 11px "+FONT;const w=ctx.measureText("休息區").width+18;ctx.globalAlpha=.9;ctx.fillStyle="rgba(255,255,255,.85)";rr(x-w/2,y-9,w,18,9);ctx.fill();ctx.fillStyle="#6b5bd6";ctx.textBaseline="middle";ctx.textAlign="center";ctx.fillText("休息區",x,y+.5);ctx.restore();}
+/* 桌上電腦螢幕：把每位 BOT 目前真實的工作畫到場景裡的螢幕上（斜角貼圖） */
+function drawMonitor(e,t){
+  const q=MON[e.id];if(!q)return;const z=cam.z,tl=q[0],tr=q[1],bl=q[3];
+  const lc=LIGHT[e.light][0];
+  ctx.save();
+  ctx.setTransform(DPR*z*(tr[0]-tl[0])/TW,DPR*z*(tr[1]-tl[1])/TW,DPR*z*(bl[0]-tl[0])/TH,DPR*z*(bl[1]-tl[1])/TH,DPR*S2X(tl[0]),DPR*S2Y(tl[1]));
+  ctx.beginPath();ctx.rect(-2,-2,TW+4,TH+4);ctx.clip();
+  const gr=ctx.createLinearGradient(0,0,TW,TH);gr.addColorStop(0,"#071a3a");gr.addColorStop(1,e.light==="working"?"#0b3a66":"#13294d");ctx.fillStyle=gr;ctx.fillRect(-2,-2,TW+4,TH+4);
+  ctx.fillStyle=lc;ctx.fillRect(-2,-2,TW+4,18);
+  ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font="700 11px "+FONT;ctx.textAlign="left";ctx.fillText(e.name.length>7?e.name.slice(0,7):e.name,5,8);
+  ctx.textAlign="right";ctx.font="700 10px "+FONT;ctx.fillText(e.state||LIGHT[e.light][1],TW-5,8);ctx.textAlign="left";
+  ctx.textBaseline="top";ctx.fillStyle="#fff";ctx.font="700 14px "+FONT;
+  const tt=wrapText(e.title||e.screen||"",TW-12,2);tt.forEach((l,i)=>ctx.fillText(l,6,21+i*16));
+  let yy=21+tt.length*16+3;ctx.font="10.5px "+FONT;ctx.fillStyle="#bfe4ff";
+  const maxL=Math.max(0,Math.floor((TH-yy-12)/12.5));(e.lines||[]).slice(0,maxL).forEach((l,i)=>{let s=l;while(s.length&&ctx.measureText(s).width>TW-12)s=s.slice(0,-1);ctx.fillText(s,6,yy+i*12.5);});
+  if(e.light==="working"){const k=Math.floor(t*2)%2;if(k){ctx.fillStyle=lc;ctx.fillRect(6,TH-24,6,9);}}
+  ctx.font="8.5px "+FONT;ctx.textBaseline="alphabetic";
+  if(!e.verified||e.note){ctx.fillStyle="#ffb020";ctx.textAlign="right";ctx.fillText(e.verified?"部分未驗證":"未驗證",TW-4,TH-4);}else{ctx.fillStyle="rgba(127,243,255,.75)";ctx.textAlign="right";ctx.fillText("已核對 "+(e.updated||"").replace(/^\d+\/\d+\s*/,""),TW-4,TH-4);}
+  ctx.restore();}
 const hits=[];
 function drawFrame(t){
   ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -462,6 +650,8 @@ function drawFrame(t){
   const sc=IMG.scene;
   if(sc&&sc.complete&&sc.naturalWidth){ctx.imageSmoothingQuality="high";ctx.drawImage(sc,S2X(0),S2Y(0),SCENE_W*cam.z,SCENE_H*cam.z);}
   drawWallScreen(t);
+  drawRestLabel();
+  emps.forEach(e=>drawMonitor(e,t));
   // 螢幕光暈
   emps.forEach(e=>{ if(e.mode!=="seated")return;const col=e.light==="working"?"#46f0ff":e.light==="waiting"?"#ffc247":e.light==="blocked"?"#ff4d63":null;if(!col)return;
     const mx=S2X(e.seat[0]-26),my=S2Y(e.seat[1]-60);const fl=e.light==="working"?0.5+0.2*Math.sin(t*6+e.phase):0.4;
@@ -499,18 +689,23 @@ function drawTag(e,inf,showCards,t){
   const lc=LIGHT[e.light][0];const x=S2X(inf.cx),yTop=S2Y(inf.top)-2;
   // 名牌
   ctx.font="700 "+(11)+"px "+FONT;const nm=e.name;const tw=ctx.measureText(nm).width;const w=tw+26,h=20;
-  const compact=!showCards;
+  const full=showCards&&!(e.resting&&e.mode!=="seated");const compact=!full;
   let tx=x-w/2,ty=yTop-h-(compact?2:4);
-  if(showCards&&e.mode!=="walking"&&e.screen&&!e.meet&&!e.bubble&&!(sched.meeting)){
-    const cw=138,chh=52;ctx.font="11px "+FONT;const lines=wrapText(e.screen,cw-18,2);const ch=(e.light==="unknown"?44:52)-(lines.length<2?10:0);
-    const cx=x-cw/2,cy=ty-ch-9;
-    ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=10;ctx.fillStyle="rgba(8,22,48,.9)";rr(cx,cy,cw,ch,8);ctx.fill();ctx.restore();
-    ctx.strokeStyle=lc;ctx.lineWidth=1.3;rr(cx,cy,cw,ch,8);ctx.stroke();
-    ctx.fillStyle=lc;ctx.fillRect(cx+8,cy+8,3,ch-16);
-    ctx.fillStyle="#dff2ff";ctx.font="11px "+FONT;ctx.textBaseline="top";lines.forEach((l,i)=>ctx.fillText(l,cx+16,cy+8+i*15));
-    // 尾巴
-    ctx.fillStyle="rgba(8,22,48,.9)";ctx.beginPath();ctx.moveTo(x-6,cy+ch);ctx.lineTo(x+6,cy+ch);ctx.lineTo(x,cy+ch+7);ctx.fill();
-    ty=ty;
+  if(e.mode!=="walking"&&(e.title||e.screen)&&!e.meet&&!e.bubble&&!(sched.meeting)){
+    if(full){
+      const cw=176;ctx.textBaseline="top";ctx.font="700 12px "+FONT;const tl=wrapText((e.title||"")+(e.verified?"":" ⚠"),cw-26,1);ctx.font="11px "+FONT;const lines=wrapText(e.sub||e.screen||"",cw-26,2);
+      const ch=10+16+lines.length*15+4;const cx=x-cw/2,cy=ty-ch-9;
+      ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=10;ctx.fillStyle="rgba(8,22,48,.92)";rr(cx,cy,cw,ch,8);ctx.fill();ctx.restore();
+      ctx.strokeStyle=lc;ctx.lineWidth=1.3;rr(cx,cy,cw,ch,8);ctx.stroke();
+      ctx.fillStyle=lc;ctx.fillRect(cx+8,cy+8,3,ch-16);
+      ctx.fillStyle="#fff";ctx.font="700 12px "+FONT;ctx.fillText(tl[0]||"",cx+16,cy+7);
+      ctx.fillStyle="#cfe6ff";ctx.font="11px "+FONT;lines.forEach((l,i)=>ctx.fillText(l,cx+16,cy+7+17+i*15));
+      ctx.fillStyle="rgba(8,22,48,.92)";ctx.beginPath();ctx.moveTo(x-6,cy+ch);ctx.lineTo(x+6,cy+ch);ctx.lineTo(x,cy+ch+7);ctx.fill();
+    }else if(e.title){
+      ctx.font="700 10.5px "+FONT;const tt=e.title+(e.verified?"":" ⚠");const cwid=ctx.measureText(tt).width+14,chh=17;const cx=x-cwid/2,cy=ty-chh-4;
+      ctx.save();ctx.shadowColor=lc;ctx.shadowBlur=6;ctx.fillStyle="rgba(8,22,48,.9)";rr(cx,cy,cwid,chh,6);ctx.fill();ctx.restore();ctx.strokeStyle=lc;ctx.lineWidth=1.1;rr(cx,cy,cwid,chh,6);ctx.stroke();
+      ctx.fillStyle="#fff";ctx.textBaseline="middle";ctx.fillText(tt,cx+7,cy+chh/2+.5);
+    }
   }
   ctx.save();ctx.shadowColor="rgba(40,50,90,.25)";ctx.shadowBlur=6;ctx.fillStyle="rgba(255,255,255,.92)";rr(tx,ty,w,h,10);ctx.fill();ctx.restore();
   ctx.fillStyle=lc;ctx.beginPath();ctx.arc(tx+10,ty+h/2,4,0,7);ctx.fill();
@@ -549,13 +744,16 @@ function tap(px,py){const [sx,sy]=X2S(px,py);let best=null;
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
 function updateSheet(open){const sh=document.getElementById("sheet");if(!selected){return;}const e=byId[selected];const [lc,ll]=LIGHT[e.light];
   const hs=((status&&status.handoffs)||[]).filter(h=>h.from===e.id||h.to===e.id).slice(-2).map(h=>{const a=byId[h.from],b=byId[h.to];return esc((a?a.name:h.from)+" → "+(b?b.name:h.to)+"："+(h.item||"")+(h.at?"（"+h.at+"）":""));});
-  sh.innerHTML='<button class="x" id="sx">×</button><div class="hd"><canvas id="sav" width="128" height="152"></canvas><div><h2>'+esc(e.name)+'</h2><div class="rl">'+esc(e.role)+(e.dept?" · "+esc(e.dept):"")+'</div><span class="st" style="background:'+lc+'">'+esc(ll)+'</span></div></div>'+
-   '<div class="task"><b>目前在做：</b>'+esc(e.screen||"（無資料）")+'</div><div class="meta">更新時間：'+esc(e.updated||"未確認")+'<br>依據：'+esc(e.basis||"未確認")+(hs.length?'<br>交接：'+hs.join("；"):"")+'</div>';
+  const lis=(e.lines||[]).map(l=>"<li>"+esc(l)+"</li>").join("");const evs=(e.evidence||[]).map(x=>"• "+esc(x)).join("<br>");
+  sh.innerHTML='<button class="x" id="sx">×</button><div class="hd"><canvas id="sav" width="128" height="152"></canvas><div><h2>'+esc(e.name)+'</h2><div class="rl">'+esc(e.role)+(e.dept?" · "+esc(e.dept):"")+'</div><span class="st" style="background:'+lc+'">'+esc(ll)+(e.state?" · "+esc(e.state):"")+'</span></div></div>'+
+   '<div class="task"><div class="tt">'+esc(e.title||"目前在做")+'</div>'+esc(e.screen||"（無資料）")+(lis?"<ul>"+lis+"</ul>":"")+'</div><div class="meta">'+(e.verified?'<span class="ok">✓ 已用檔案時間核對</span>':'<span class="warn">⚠ 未能用檔案驗證，以 BOT 回報為準</span>')+(e.note?'<div class="warn" style="font-weight:400;margin-top:3px">⚠ '+esc(e.note)+'</div>':'')+'<br>更新時間：'+esc(e.updated||"未確認")+'<br>依據：'+esc(e.basis||"未確認")+(evs?'<div class="ev">'+evs+'</div>':"")+(hs.length?'<br>交接：'+hs.join("；"):"")+'</div>';
   const c=document.getElementById("sav").getContext("2d");const im=IMG[e.c.sp];if(im&&im.naturalWidth){const sw=im.naturalWidth,sh2=im.naturalHeight*0.46;const k=Math.min(128/sw,152/sh2);c.drawImage(im,0,0,sw,sh2,(128-sw*k)/2,2,sw*k,sh2*k);}
   document.getElementById("sx").onclick=()=>{selected=null;sh.classList.remove("show");restoreCam();};if(open)sh.classList.add("show");}
 // 頭像（上半身）重畫：簡單置中裁切
 function avatarDraw(){}
 document.getElementById("bReset").onclick=resetCam;
+document.getElementById("bAll").onclick=()=>{const p=document.getElementById("panel");const list=((status&&status.employees)||[]).map(x=>byId[x.id]).filter(Boolean);
+  p.querySelector(".in").innerHTML='<h3>全員目前在做什麼</h3><div style="font-size:11px;color:#8a93a8;margin:-6px 0 6px">資料時間 '+esc((status&&status.asOf)||"?")+'　⚠＝未能用檔案驗證</div>'+list.map(e=>{const [lc,ll]=LIGHT[e.light];return '<div class="emp"><div class="h"><i style="background:'+lc+'"></i><b>'+esc(e.name)+'</b><small style="color:#68718a">'+esc(e.role)+'</small><span style="background:'+lc+'">'+esc(e.state||ll)+'</span></div><div class="t">'+esc(e.title||"")+'</div><div class="s">'+esc(e.screen||"")+'</div><div class="m">更新 '+esc(e.updated||"未確認")+(e.verified?" · 已核對":"")+'</div>'+(e.verified?"":'<div class="w">⚠ 未能用檔案驗證</div>')+(e.note?'<div class="w">⚠ '+esc(e.note)+'</div>':'')+'</div>';}).join("");p.classList.add("show");};
 document.getElementById("bRout").onclick=()=>{const p=document.getElementById("panel");const r=(status&&status.routines)||[];p.querySelector(".in").innerHTML='<h3>今日排程</h3>'+r.map(x=>'<div class="it"><em>'+esc(x.status||"")+'</em><b>'+esc(x.time||"")+'</b>'+esc(x.name||"")+'<div style="color:#6b7490;margin-top:2px">'+esc(x.detail||"")+'</div></div>').join("");p.classList.add("show");};
 document.getElementById("panel").onclick=e=>{if(e.target.id==="panel")e.currentTarget.classList.remove("show");};
 document.getElementById("bHand").onclick=()=>{const hs=nextHandoffs();const h=hs.length?hs[hs.length-1]:{from:"daytrade",to:"researcher",item:"示範文件"};if(!playHandoff(h,!hs.length)){}};
