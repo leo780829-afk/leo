@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>像素 AI 辦公室</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div id="brand">🏢 像素 AI 辦公室</div>
+      <div id="asof">資料時間：<span id="asof-text">載入中…</span></div>
+    </header>
+
+    <main id="stage">
+      <div id="canvas-wrap">
+        <canvas id="game" width="384" height="256"></canvas>
+        <div id="loading">載入辦公室中…</div>
+      </div>
+      <div id="legend">
+        <span class="legend-item"><i class="dot dot-working"></i>工作中</span>
+        <span class="legend-item"><i class="dot dot-waiting"></i>等待決定</span>
+        <span class="legend-item"><i class="dot dot-idle"></i>閒置</span>
+        <span class="legend-item"><i class="dot dot-blocked"></i>異常</span>
+        <span class="legend-item">🎮 玩電腦　💬 聊天　☕ 休息區</span>
+      </div>
+    </main>
+
+    <div id="dialog-overlay" class="hidden">
+      <div id="dialog-box">
+        <div id="dialog-name"></div>
+        <div id="dialog-body">
+          <div id="dialog-state"></div>
+          <div id="dialog-sub"></div>
+          <div id="dialog-screen"></div>
+          <div id="dialog-lines"></div>
+          <div id="dialog-asof"></div>
+        </div>
+        <button id="dialog-close" aria-label="關閉">▼</button>
+      </div>
+    </div>
+
+    <footer id="hint">點一下員工即可查看詳情</footer>
+  </div>
+
+<script src="app.js"></script>
+</body>
+</html>

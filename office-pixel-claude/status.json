@@ -1,0 +1,340 @@
+{
+ "asOf": "10/29 22:01（台北時間）",
+ "employees": [
+  {
+   "id": "meimei",
+   "name": "美美",
+   "role": "協調總管",
+   "dept": "管理部",
+   "light": "working",
+   "state": "巡檢中",
+   "title": "22:00 巡檢",
+   "sub": "P1與0050濾網都不過；講義已附檢查表",
+   "screen": "22:00 巡檢：20:00 之後只有以恆的庫藏股公告例行抓取（20:37）有更新，其他部門沒有新檔案，大家都交完件在等 Leo 決定（0050 濾網線與 P1 不通過的後續、若晴第 1、2 章待審）。依省用量規則不另派新工作。",
+   "lines": [
+    "P1樣本內不過",
+    "0050濾網不過",
+    "講義附檢查表",
+    "sizing v3已改"
+   ],
+   "basis": "specs、out_3a1、out_3a2 檔案時間（16:18–17:47）與內容",
+   "updated": "10/29 17:16",
+   "verified": true,
+   "evidence": [
+    "P1 樣本內報告 r1（p1_is_report_2026-10-29_r1.md）· 10/29 17:16",
+    "登記紀錄（registration_log.md）· 10/29 17:02"
+   ]
+  },
+  {
+   "id": "alfred",
+   "name": "天睿顧問Alfred",
+   "role": "營運顧問",
+   "dept": "管理部",
+   "light": "working",
+   "state": "調查中",
+   "title": "週報定義已核准",
+   "sub": "5項定義核准；在籍差2已查出原因",
+   "screen": "Leo 15:56–16:00 核准週報定義：續班率分母、試聽轉報名 14 天、畢業升級單獨記、離班日期以最後一堂課為準、回流生另記。在籍來源暫緩，先查差 2：米豆奶有 2 位學生同時掛兩個分校，按分校篩選被重複計算；營運中樞名單未比對。民德選科＋加科表單草稿待 Leo 核准，未對外發送。",
+   "lines": [
+    "週報定義核准",
+    "在籍差2已查出",
+    "雙分校重複計",
+    "加科表單待核准"
+   ],
+   "basis": "/workspace/tianrui 檔案時間（15:56–16:00）與內容",
+   "updated": "10/29 16:00",
+   "verified": true,
+   "note": "下次巡查 10/29 13:00：為排程回報",
+   "evidence": [
+    "Leo 決定紀錄（Leo決定紀錄_2026-10-29.md）· 10/29 16:00",
+    "在籍差異調查（在籍差異調查.md）· 10/29 15:59",
+    "選科加科表單草稿（選科表單_加科方案_待核准.md）· 10/29 15:56"
+   ]
+  },
+  {
+   "id": "buffett",
+   "name": "承遠",
+   "role": "價值投資顧問",
+   "dept": "投資研究部",
+   "light": "waiting",
+   "state": "等Leo決定",
+   "title": "0050濾網不過",
+   "sub": "主版回測不通過；另寫風險審查清單",
+   "screen": "0050 濾網線 v1 主版回測不通過：最差季 −15.96%（門檻 −15%）、DSR 0.509 與 BH 檢定不過，其餘多項通過。承遠另撰風險審查清單 v1（16:48），書妍已裁定並登記（16:58）。0050 只當比較基準，不買、不定期定額。未下單。",
+   "lines": [
+    "0050濾網不過",
+    "最差季-15.96%",
+    "風險清單已裁定",
+    "只當比較基準"
+   ],
+   "basis": "specs 檔案時間（16:33–16:58）與 registration_log 16:58 條目",
+   "updated": "10/29 16:48",
+   "verified": true,
+   "evidence": [
+    "0050 濾網結果（value_overlay_0050_result_2026-10-29.md）· 10/29 16:33",
+    "風險審查清單（risk_review_checklist_v1.md）· 10/29 16:48"
+   ]
+  },
+  {
+   "id": "four",
+   "name": "以恆",
+   "role": "波段研究員",
+   "dept": "投資研究部",
+   "light": "waiting",
+   "state": "等Leo決定",
+   "title": "P1樣本內不過",
+   "sub": "4格全部不過；交件後停下等決定",
+   "screen": "P1 庫藏股買回樣本內（2019–2022）回測 17:16 修訂版：4 格全部不過，主因是事件太少、股票平均只占淨值 11%–15%，月均報酬 0.8%–0.9%（門檻 2%），且報酬集中在 2020 年。最佳格累計 51.7%、年化 11.0%，同期 0050 為 70.7%。不進紙上交易，沒有看樣本外。",
+   "lines": [
+    "P1 4格全不過",
+    "持股只占11-15%",
+    "報酬集中2020",
+    "不進紙上交易"
+   ],
+   "basis": "specs 與 backtest_lowturnover/p1_is 檔案時間（16:49–17:16）與報告內容",
+   "updated": "10/29 17:16",
+   "verified": true,
+   "evidence": [
+    "P1 樣本內報告 r1（p1_is_report_2026-10-29_r1.md）· 10/29 17:16",
+    "P1 澄清規格（swing_spec_lowturnover_v1_1_clarify_p1.md）· 10/29 16:49"
+   ]
+  },
+  {
+   "id": "daytrade",
+   "name": "子睿",
+   "role": "當沖研究員",
+   "dept": "投資研究部",
+   "light": "waiting",
+   "state": "已登記",
+   "title": "sizing v3已上",
+   "sub": "每筆最多虧1,000元已寫進程式",
+   "screen": "Leo 16:49 決定當沖每筆最多虧 1,000 元，書妍登記 sizing v3（16:52）與可行性報告（16:53）；當沖程式已改成單筆風險 0.5%、停損距離加計手續費與當沖稅，單元測試 211 項通過（17:00）。午盤 RS v1 已登記，尚未看報酬；回測下一步依指示。",
+   "lines": [
+    "每筆虧損≤1000",
+    "程式已改",
+    "測試211通過",
+    "RS v1未看報酬"
+   ],
+   "basis": "specs 與 daytrade_py 檔案時間（16:52–17:01）",
+   "updated": "10/29 17:00",
+   "verified": true,
+   "evidence": [
+    "sizing v3 程式變更（sizing_v3_code_change_2026-10-29.md）· 10/29 17:00",
+    "午盤 RS v1（daytrade_rs_afternoon_v1.md）· 10/29 15:47"
+   ]
+  },
+  {
+   "id": "researcher",
+   "name": "書妍",
+   "role": "回測驗證員",
+   "dept": "投資研究部",
+   "light": "working",
+   "state": "登記把關",
+   "title": "複核與裁定",
+   "sub": "sizing v3、風險裁定已登記",
+   "screen": "書妍 16:18 登記 DSR 方法修正與 K2P 規則 v2，16:52 登記 sizing v3，16:58 完成風險審查清單裁定並登記；0050 濾網回測判不通過；複核 P1 報告後要求以恆出修訂版 r1（17:16，試驗數改用 1676）。全域試驗 1676、敏感度帳 2545。",
+   "lines": [
+    "sizing v3登記",
+    "風險清單已裁定",
+    "P1報告已複核",
+    "全域試驗1676"
+   ],
+   "basis": "registration_log 16:18–17:02 條目",
+   "updated": "10/29 17:02",
+   "verified": true,
+   "note": "盤前報告排程時間：查不到檔案可核對",
+   "evidence": [
+    "風險審查裁定（risk_review_rulings_v1.md）· 10/29 16:58",
+    "登記紀錄（registration_log.md）· 10/29 17:02",
+    "K2P QC v2（k2p_qc_v2.md）· 10/29 16:17"
+   ]
+  },
+  {
+   "id": "ip",
+   "name": "語彤",
+   "role": "IP小編",
+   "dept": "內容工作室",
+   "light": "waiting",
+   "state": "等羽球Reel",
+   "title": "羽球Reels文案",
+   "sub": "羽球Reels文案草稿完成；未發文",
+   "screen": "羽球 Reels 文案草稿已寫好（多組短標題、IG 內文、Threads 文字與標籤），給品安剪輯用；未經 Leo 確認、不發文。依 Leo 指示貼文暫停，Reels 只用羽球影片。",
+   "lines": [
+    "羽球Reels文案",
+    "多組草稿",
+    "未發文",
+    "貼文暫停(Leo)"
+   ],
+   "basis": "ip-plan 檔案時間與草稿內容",
+   "updated": "10/29 00:06",
+   "verified": true,
+   "evidence": [
+    "羽球 Reels 文案草稿（reels_badminton_drafts.md）· 10/29 00:06"
+   ]
+  },
+  {
+   "id": "badminton",
+   "name": "品安",
+   "role": "羽球剪輯師",
+   "dept": "內容工作室",
+   "light": "idle",
+   "state": "休息中",
+   "title": "休息中",
+   "sub": "依 Leo 指示休息，沒有進行中的工作",
+   "screen": "依 Leo 指示休息，目前沒有進行中的工作；之前的候選片段沒有達 7 分的，建議 Leo 補新的 iCloud 素材。",
+   "lines": [
+    "依 Leo 指示休息",
+    "沒有進行中工作",
+    "片段未達7分",
+    "等新羽球素材"
+   ],
+   "basis": "badminton/shortlist 檔案時間",
+   "updated": "10/28 16:08",
+   "verified": true,
+   "note": "「休息中」為 Leo 指示（美美 回報）",
+   "evidence": [
+    "羽球候選片段清單（shortlist.md）· 10/28 16:08"
+   ]
+  },
+  {
+   "id": "math",
+   "name": "若晴",
+   "role": "數學助教",
+   "dept": "內容工作室",
+   "light": "waiting",
+   "state": "等Leo審",
+   "title": "國三上1-2章",
+   "sub": "已附逐節檢查表；等Leo看過再做第3章",
+   "screen": "國三上第 1 章相似形與第 2 章圓已依 Leo 新規則，逐節檢查題目邏輯、教學順序、由淺入深並修正，檢查表 17:47 附上。第 1 章重建後兩版各 118 頁、頁面對齊、答案重算 0 錯誤；第 2 章兩版各 101 頁。等 Leo 看過再做第 3 章。",
+   "lines": [
+    "第1章 相似形118頁",
+    "第2章 圓 101頁",
+    "逐節檢查表已附",
+    "等Leo審再做下章"
+   ],
+   "basis": "out_3a1、out_3a2 檔案時間（17:12–17:47）與審查紀錄",
+   "updated": "10/29 17:47",
+   "verified": true,
+   "evidence": [
+    "逐節檢查表（檢查表_題目邏輯_教學順序_由淺入深.md）· 10/29 17:47",
+    "第1章 學生版 PDF（1_【優化版】國三上第1章_相似形_學生版.pdf）· 10/29 17:14",
+    "第2章 學生版 PDF（2_【優化版】國三上第2章_圓_學生版.pdf）· 10/29 17:35"
+   ]
+  }
+ ],
+ "routines": [
+  {
+   "time": "00:04",
+   "name": "BOT 狀態巡檢",
+   "detail": "各 BOT 於 00:05–00:16 交件",
+   "status": "已完成"
+  },
+  {
+   "time": "01:52",
+   "name": "BOT 狀態巡檢",
+   "detail": "全員已交件，依省用量規則不派新工作",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 08:32",
+   "name": "K2P 剩餘重跑（Leo 同意）",
+   "detail": "08:59 完成，約用 68 MB；報告 k2p_rerun_result.md",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 09:52",
+   "name": "BOT 狀態巡檢",
+   "detail": "K2P 重跑完成，其他人都在等 Leo 決定",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 11:52",
+   "name": "BOT 狀態巡檢",
+   "detail": "無新進度，中午待決清單交給 Leo",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 14:00",
+   "name": "BOT 狀態巡檢",
+   "detail": "無新進度，全員等 Leo 決定",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 16:00",
+   "name": "BOT 狀態巡檢",
+   "detail": "Leo 決定落實中，K2P 缺口可補",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 18:00",
+   "name": "BOT 狀態巡檢",
+   "detail": "P1、0050 濾網不過；講義附檢查表",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 20:00",
+   "name": "BOT 狀態巡檢",
+   "detail": "無新進度，全員等 Leo 決定",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 22:00",
+   "name": "BOT 狀態巡檢",
+   "detail": "只有庫藏股例行抓取，全員等 Leo 決定",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 12:00",
+   "name": "信箱與官方 LINE 整理",
+   "detail": "每日中午例行（12:07、12:12 跑完）",
+   "status": "已完成"
+  },
+  {
+   "time": "10/29 13:00",
+   "name": "Alfred 巡查",
+   "detail": "例行巡查（排程回報；13:00 後 tianrui 無新檔）",
+   "status": "未確認"
+  },
+  {
+   "time": "未確認",
+   "name": "書妍 盤前報告",
+   "detail": "查不到排程檔案，時間未確認",
+   "status": "未確認"
+  }
+ ],
+ "handoffs": [
+  {
+   "from": "researcher",
+   "to": "four",
+   "item": "低週轉提案 v5 複審結論",
+   "at": "10/28 22:05",
+   "state": "sent",
+   "note": "書妍複審完成，已無規則缺口"
+  },
+  {
+   "from": "ip",
+   "to": "badminton",
+   "item": "羽球 Reels 文案草稿",
+   "at": "10/29 00:06",
+   "state": "sent",
+   "note": "給品安剪輯用的文案"
+  }
+ ],
+ "meeting": {
+  "active": false,
+  "attendees": [],
+  "topic": ""
+ },
+ "_schema_notes": {
+  "light": "working / idle / waiting / blocked / unknown。idle 與 waiting 會自動走到休息區坐/站著。",
+  "title": "≤10 字，顯示在螢幕與頭上標籤",
+  "sub": "≤24 字，顯示在頭上卡片與大螢幕",
+  "lines": "最多 4 行、每行 ≤12 字，顯示在桌上電腦螢幕",
+  "state": "短狀態字（≤6 字），如 製作中／等Leo決定",
+  "verified": "false＝完全沒有檔案可核對",
+  "note": "部分內容查不到檔案時的說明（橘色警示）",
+  "evidence": "檔案名稱與修改時間（供點開 BOT 時顯示）",
+  "handoffs": "選填。每筆 {from,to,item,at,state}；from/to 為員工 id。",
+  "meeting": "選填。active=true 時全員到白板開會。"
+ }
+}
