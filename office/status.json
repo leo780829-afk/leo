@@ -1,5 +1,5 @@
 {
- "asOf": "10/30 09:54（台北時間）",
+ "asOf": "10/30 11:59（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -8,16 +8,16 @@
    "dept": "管理部",
    "light": "working",
    "state": "巡檢中",
-   "title": "09:53 巡檢",
-   "sub": "Leo 選了 Codex 版像素辦公室，修訂版已交件",
-   "screen": "09:53 巡檢：01:56 之後研究部門沒有新報告，只有例行工作：07:38 一分K資料搬移、08:36 以恆庫藏股公告例行抓取。寶可夢像素辦公室：Leo 02:36 選了 Codex 版並要求修訂（更精緻的 GBA 風人物、大畫面、手機不被切掉），Codex 02:38 交修訂版，附桌機與手機截圖、測試通過，尚未推上 repo。依省用量規則不另派新工作。",
+   "title": "11:58 巡檢",
+   "sub": "09:53 後沒有新檔案；中午待決事項交給 Leo",
+   "screen": "11:58 巡檢：09:53 之後各部門共用資料夾都沒有新檔案，研究類都在等 Leo 決定。寶可夢像素辦公室：Leo 02:36 選了 Codex 版，Codex 02:38 交修訂版，尚未推上 repo。依省用量規則不另派新工作，中午把待決事項整理給 Leo。",
    "lines": [
-    "無新研究報告",
-    "例行抓取正常",
-    "Leo選Codex版",
-    "修訂版已交件"
+    "無新檔案",
+    "全員等Leo決定",
+    "Codex修訂待看",
+    "中午待決清單"
    ],
-   "basis": "pixel-contest/codex 檔案時間（02:36–02:38）、codex_rev.log、kbars_1m 與 buyback_announcements 檔案時間",
+   "basis": "/workspace 全區 find -newermt 09:50（只有 office-v3 自身變動）",
    "updated": "10/30 02:38",
    "verified": true,
    "evidence": [
@@ -224,6 +224,12 @@
   }
  ],
  "routines": [
+  {
+   "time": "11:58",
+   "name": "BOT 狀態巡檢",
+   "detail": "09:53 後無新檔案；中午待決清單交給 Leo",
+   "status": "已完成"
+  },
   {
    "time": "09:53",
    "name": "BOT 狀態巡檢",
