@@ -1,5 +1,5 @@
 {
- "asOf": "10/30 01:56（台北時間）",
+ "asOf": "10/30 09:54（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -8,22 +8,22 @@
    "dept": "管理部",
    "light": "working",
    "state": "巡檢中",
-   "title": "01:56 巡檢",
-   "sub": "像素辦公室比稿兩邊都交件，等 Leo 挑",
-   "screen": "01:56 巡檢：23:53 之後各研究部門沒有新檔案，大家都在等 Leo 決定或週日額度重置。寶可夢像素辦公室比稿：Codex 22:11 交件；Claude Code 接續重跑後 00:37 交件（含手機與桌機截圖、README，會走動、坐沙發、找同事聊天，點人物可看狀態）。兩版都等 Leo 中午看過再挑。依省用量規則不另派新工作。",
+   "title": "09:53 巡檢",
+   "sub": "Leo 選了 Codex 版像素辦公室，修訂版已交件",
+   "screen": "09:53 巡檢：01:56 之後研究部門沒有新報告，只有例行工作：07:38 一分K資料搬移、08:36 以恆庫藏股公告例行抓取。寶可夢像素辦公室：Leo 02:36 選了 Codex 版並要求修訂（更精緻的 GBA 風人物、大畫面、手機不被切掉），Codex 02:38 交修訂版，附桌機與手機截圖、測試通過，尚未推上 repo。依省用量規則不另派新工作。",
    "lines": [
-    "無新研究檔案",
-    "Codex已交件",
-    "Claude已交件",
-    "等Leo挑版本"
+    "無新研究報告",
+    "例行抓取正常",
+    "Leo選Codex版",
+    "修訂版已交件"
    ],
-   "basis": "tw-stock/daily/1029、pixel-contest 檔案時間（22:11–00:37）與 claude.log",
-   "updated": "10/30 00:37",
+   "basis": "pixel-contest/codex 檔案時間（02:36–02:38）、codex_rev.log、kbars_1m 與 buyback_announcements 檔案時間",
+   "updated": "10/30 02:38",
    "verified": true,
    "evidence": [
     "10/30 盤前報告（report_1030.md）· 10/29 23:22",
-    "Codex 像素辦公室（README.md）· 10/29 22:11",
-    "Claude 像素辦公室（README.md）· 10/30 00:37"
+    "Codex 修訂需求（REVISE.md）· 10/30 02:36",
+    "Codex 像素辦公室（README.md）· 10/30 02:38"
    ]
   },
   {
@@ -224,6 +224,30 @@
   }
  ],
  "routines": [
+  {
+   "time": "09:53",
+   "name": "BOT 狀態巡檢",
+   "detail": "無新研究報告；Codex 像素辦公室修訂版已交件",
+   "status": "已完成"
+  },
+  {
+   "time": "08:36",
+   "name": "以恆 庫藏股公告抓取",
+   "detail": "例行抓取（TWSE、TPEX）",
+   "status": "已完成"
+  },
+  {
+   "time": "07:38",
+   "name": "每日搬移一分K資料",
+   "detail": "例行搬移完成",
+   "status": "已完成"
+  },
+  {
+   "time": "01:56",
+   "name": "BOT 狀態巡檢",
+   "detail": "像素辦公室比稿兩邊都交件",
+   "status": "已完成"
+  },
   {
    "time": "00:04",
    "name": "BOT 狀態巡檢",
