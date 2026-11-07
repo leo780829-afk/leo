@@ -1,0 +1,133 @@
+{
+  "asOf": "10/28 05:15（台北時間）",
+  "employees": [
+    {
+      "id": "meimei",
+      "name": "MeiMei",
+      "role": "協調總管",
+      "dept": "管理部",
+      "light": "working",
+      "screen": "同步 Leo 電腦已回補的 1 分K（含下市股）與加權指數 1 分K 到 box，並備妥今日排程",
+      "updated": "10/28 04:20",
+      "basis": "MeiMei 自己回報"
+    },
+    {
+      "id": "alfred",
+      "name": "天睿顧問Alfred",
+      "role": "營運顧問",
+      "dept": "管理部",
+      "light": "idle",
+      "screen": "等 12:00 收到第一份每日官方 LINE 整理",
+      "updated": "10/28 04:20",
+      "basis": "MeiMei 回報"
+    },
+    {
+      "id": "buffett",
+      "name": "巴菲特投資模擬",
+      "role": "價值投資顧問",
+      "dept": "投資研究部",
+      "light": "unknown",
+      "screen": "未確認（新分工中退居顧問，不在主流程）",
+      "updated": "未確認",
+      "basis": "目前查不到可驗證的最新動態"
+    },
+    {
+      "id": "four",
+      "name": "台股四師研究",
+      "role": "短線波段研究",
+      "dept": "投資研究部",
+      "light": "working",
+      "screen": "撰寫非當沖、事前註冊的波段策略規格；新分工後專責短線波段研究，XQ 腳本草稿依 Leo 指示暫停",
+      "updated": "10/28 04:25",
+      "basis": "swing_spec_s1s2.md 檔案時間"
+    },
+    {
+      "id": "daytrade",
+      "name": "台股當沖研究員",
+      "role": "當沖策略研究",
+      "dept": "投資研究部",
+      "light": "working",
+      "screen": "高波動個股當沖規格 daytrade_highvol_v1 已送驗證",
+      "updated": "10/28 04:44",
+      "basis": "台股當沖研究員回報"
+    },
+    {
+      "id": "researcher",
+      "name": "台股回測驗證員",
+      "role": "回測驗證＋XQ 腳本",
+      "dept": "投資研究部",
+      "light": "working",
+      "screen": "「穩定獲利」門檻提案已寫好，等 Leo 過目；整理方案 A 每檔需補抓的月份清單；V5 仍卡在 1 分K 覆蓋率未達 95%",
+      "updated": "10/28 約 04:40",
+      "basis": "台股回測驗證員回報（時間為大約）"
+    },
+    {
+      "id": "ip",
+      "name": "個人IP小編",
+      "role": "IG／Threads 個人品牌",
+      "dept": "內容工作室",
+      "light": "waiting",
+      "screen": "已收到 58 張精選照片；定位的 5 個問題等 Leo 回覆；第一週內容計畫為草稿，尚未發布",
+      "updated": "10/28 04:17",
+      "basis": "ip-plan 檔案時間與 MeiMei 回報"
+    },
+    {
+      "id": "badminton",
+      "name": "羽球剪輯師",
+      "role": "每週羽球短片",
+      "dept": "內容工作室",
+      "light": "working",
+      "screen": "Leo 已接洽；工作資料夾 badminton/v3 剛產出第 3 版影片檔，是否定稿未確認",
+      "updated": "10/28 04:27",
+      "basis": "badminton/v3 檔案時間"
+    },
+    {
+      "id": "math",
+      "name": "數學助教",
+      "role": "講義、短影音",
+      "dept": "內容工作室",
+      "light": "unknown",
+      "screen": "未確認（最近的講義檔案 out_3b 為 01:44）",
+      "updated": "未確認",
+      "basis": "僅有檔案時間可參考"
+    }
+  ],
+  "routines": [
+    {
+      "time": "12:00",
+      "name": "官方 LINE 每日訊息整理",
+      "detail": "唯讀、5 個帳號、不擬回覆；整理客訴、超過 24 小時未回覆與重要事項，傳給 Leo，同一份也給天睿顧問Alfred",
+      "status": "待執行"
+    },
+    {
+      "time": "12:20",
+      "name": "Shioaji 檢查",
+      "detail": "既有排程，細節未確認",
+      "status": "待執行"
+    },
+    {
+      "time": "13:18",
+      "name": "Shioaji 跌停價 ROD 加測（一次性）",
+      "detail": "先唯讀檢查電腦的睡眠與 Windows Update 設定；13:20–13:25 以模擬單賣出 1 張 2884 跌停價 ROD，未成交即取消",
+      "status": "待執行"
+    },
+    {
+      "time": "20:30",
+      "name": "Leo 電腦 1 分K 回補",
+      "detail": "Leo 已同意改用方案 A（每檔只抓前 100 名的月份）；月份清單整理中，抓取腳本尚未調整",
+      "status": "待執行"
+    },
+    {
+      "time": "22:00",
+      "name": "Shioaji K2P 逐筆抓取（一次性）",
+      "detail": "抓開盤 554 分鐘與 1–2 檔下市櫃股，上限約 80 MB，結果交給台股回測驗證員",
+      "status": "待執行"
+    },
+    {
+      "time": "未確認",
+      "name": "BOT 巡檢、每日搬移、信箱整理、掛單收盤、TimeTree、FedEx、Tesla",
+      "detail": "既有排程，今日執行時間未確認",
+      "status": "未確認"
+    }
+  ]
+}
