@@ -1,5 +1,5 @@
 {
- "asOf": "11/09 02:00（台北時間）",
+ "asOf": "11/09 09:52（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -18,14 +18,14 @@
     "深夜不打擾Leo"
    ],
    "basis": "report_1109.md 23:29／tpex 01:58 到 2025-04-02／進程在跑／twse BLOCKED；缺漏 87 行；潛水Reel v2 18:07",
-   "updated": "11/09 01:58",
+   "updated": "11/09 07:35",
    "verified": true,
    "evidence": [
     "11/9 盤前報告（report_1109.md）· 11/08 23:29",
     "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/07 10:55",
     "上櫃融資最新（mg_20250402.json）· 11/09 01:58",
     "上市融資最新（mg_20180425.json）· 11/07 10:55",
-    "一分K缺漏清單（missing.txt）· 11/07 10:56",
+    "一分K缺漏清單（missing.txt）· 11/09 07:35",
     "潛水Reel v2（leo_dive_reel_v2.mp4）· 11/07 18:07"
    ]
   },
@@ -96,12 +96,12 @@
     "FinMind未動"
    ],
    "basis": "tpex 01:58／2025-04-02／進程在跑／twse BLOCKED／buyback 20:30／董監 21:08／FinMind 停",
-   "updated": "11/09 01:58",
+   "updated": "11/09 08:33",
    "verified": true,
    "evidence": [
     "上櫃融資最新（mg_20250402.json）· 11/09 01:58",
     "上市融資最新（mg_20180425.json）· 11/07 10:55",
-    "庫藏股 fetch_log（fetch_log.csv）· 11/08 20:30",
+    "庫藏股 fetch_log（fetch_log.csv）· 11/09 08:33",
     "D2 IS 探索報告（d2_is_explore_report_2026-11-01.md）· 11/07 10:55"
    ]
   },
@@ -122,11 +122,11 @@
     "等覆蓋過閘"
    ],
    "basis": "07:51 journal；missing 87；VOID；NOTE；07:32 Plan A batch3",
-   "updated": "11/07 10:56",
+   "updated": "11/09 07:35",
    "verified": true,
    "evidence": [
     "日K跳空IS結果（is_result.md）· 11/07 10:55",
-    "缺漏清單（missing.txt）· 11/07 10:56",
+    "缺漏清單（missing.txt）· 11/09 07:35",
     "授權作廢標記（RUN_AUTHORIZATION.VOID_20261102.json）· 11/07 10:55",
     "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/07 10:55"
    ]
