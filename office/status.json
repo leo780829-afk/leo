@@ -1,5 +1,5 @@
 {
- "asOf": "11/14 09:53（台北時間）",
+ "asOf": "11/14 11:55（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -8,9 +8,9 @@
    "dept": "管理部",
    "light": "working",
    "state": "巡檢中",
-   "title": "09:53 巡檢",
-   "sub": "無卡住；近4小時僅 tw-stock 資料抓取檔案更新（未確認各BOT細節）",
-   "screen": "09:53 巡檢（11/14）：近4小時僅 tw-stock 歷史日資料抓取檔案有更新，其餘 out_*、tianrui、ip-plan 無新檔，無需 Leo 決定。",
+   "title": "11:55 巡檢",
+   "sub": "無卡住；近4小時僅 tw-stock 歷史資料抓取檔案更新（未確認各BOT細節）",
+   "screen": "11:55 巡檢（11/14）：近4小時僅 tw-stock 歷史日資料抓取檔案有更新，其餘 out_*、tianrui、ip-plan 無新檔，無需 Leo 決定。",
    "lines": [
     "書妍重算覆蓋中",
     "Leo決定補填",
