@@ -1,5 +1,5 @@
 {
- "asOf": "11/17 10:16（台北時間）",
+ "asOf": "11/17 14:16（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -8,9 +8,9 @@
    "dept": "管理部",
    "light": "working",
    "state": "巡檢中",
-   "title": "10:17 巡檢",
-   "sub": "上櫃抓取進程在跑（log 最後 08:30 到 2014-09-17）",
-   "screen": "10:17 巡檢（11/17）：tw-stock 上櫃日行情歷史抓取進程（PID 19417）仍在，fetch_log 最後 08:30 到 2014-09-17，近約2小時無新行；未滿3小時，下輪再看。其餘 out_*、tianrui、ip-plan 近4小時無新檔，無需 Leo 決定。",
+   "title": "14:17 巡檢",
+   "sub": "上櫃抓取進程在跑（14:15 到 2014-11-03）",
+   "screen": "14:17 巡檢（11/17）：box 12:21 曾被還原，現已恢復；tw-stock 上櫃日行情抓取重新啟動（PID 12062），fetch_log 14:15 到 2014-11-03，持續前進。其餘無需 Leo 決定。",
    "lines": [
     "書妍重算覆蓋中",
     "Leo決定補填",
@@ -18,15 +18,15 @@
     "補填規格已交書妍"
    ],
    "basis": "tpex fetch_log 11:40／2026-04-13／進程在跑；cov_rerun_20261110_backfill_v1 11:38；journal 11:05",
-   "updated": "11/10 07:43",
+   "updated": "11/17 12:23",
    "verified": true,
    "evidence": [
-    "11/9 盤前報告（report_1109.md）· 11/08 23:29",
-    "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/07 10:55",
-    "上櫃融資最新（mg_20251008.json）· 11/09 21:54",
-    "上市融資最新（mg_20180425.json）· 11/07 10:55",
-    "一分K缺漏清單（missing.txt）· 11/10 07:43",
-    "潛水Reel v2（leo_dive_reel_v2.mp4）· 11/07 18:07"
+    "11/9 盤前報告（report_1109.md）· 11/17 12:20",
+    "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/17 12:20",
+    "上櫃融資最新（mg_20251008.json）· 11/17 12:22",
+    "上市融資最新（mg_20180425.json）· 11/17 12:22",
+    "一分K缺漏清單（missing.txt）· 11/17 12:22",
+    "潛水Reel v2（leo_dive_reel_v2.mp4）· 11/17 12:23"
    ]
   },
   {
@@ -46,13 +46,13 @@
     "加科表單已撤回"
    ],
    "basis": "/workspace/tianrui 檔案時間與內容",
-   "updated": "11/07 10:55",
+   "updated": "11/17 12:22",
    "verified": true,
    "note": "自 10/30 後 tianrui 無新檔；只追進度",
    "evidence": [
-    "Leo 決定紀錄（Leo決定紀錄_2026-10-29.md）· 11/07 10:55",
-    "在籍差異調查（在籍差異調查.md）· 11/07 10:55",
-    "選科加科表單（已撤回）（選科表單_加科方案_已撤回.md）· 11/07 10:55"
+    "Leo 決定紀錄（Leo決定紀錄_2026-10-29.md）· 11/17 12:22",
+    "在籍差異調查（在籍差異調查.md）· 11/17 12:22",
+    "選科加科表單（已撤回）（選科表單_加科方案_已撤回.md）· 11/17 12:21"
    ]
   },
   {
@@ -72,11 +72,11 @@
     "未下單"
    ],
    "basis": "specs/value_review_weekly_2026-11-01.md",
-   "updated": "11/07 10:56",
+   "updated": "11/17 12:22",
    "verified": true,
    "evidence": [
-    "下週價值複核（value_review_weekly_2026-11-01.md）· 11/07 10:56",
-    "價值新方向提案（value_new_direction_proposal_2026-11-01.md）· 11/07 10:56"
+    "下週價值複核（value_review_weekly_2026-11-01.md）· 11/17 12:21",
+    "價值新方向提案（value_new_direction_proposal_2026-11-01.md）· 11/17 12:22"
    ]
   },
   {
@@ -96,13 +96,13 @@
     "FinMind未動"
    ],
    "basis": "daily_hist tpex fetch_log 01:54／2013-05-22／進程在跑／twse BLOCKED／FinMind 停",
-   "updated": "11/17 08:28",
+   "updated": "11/17 12:23",
    "verified": true,
    "evidence": [
-    "上櫃融資最新（mg_20250402.json）· 11/09 01:58",
-    "上市融資最新（mg_20180425.json）· 11/07 10:55",
-    "庫藏股 fetch_log（fetch_log.csv）· 11/17 08:28",
-    "D2 IS 探索報告（d2_is_explore_report_2026-11-01.md）· 11/07 10:55"
+    "上櫃融資最新（mg_20250402.json）· 11/17 12:21",
+    "上市融資最新（mg_20180425.json）· 11/17 12:22",
+    "庫藏股 fetch_log（fetch_log.csv）· 11/17 12:23",
+    "D2 IS 探索報告（d2_is_explore_report_2026-11-01.md）· 11/17 12:21"
    ]
   },
   {
@@ -122,13 +122,13 @@
     "等覆蓋過閘"
    ],
    "basis": "07:51 journal；missing 87；VOID；NOTE；07:32 Plan A batch3",
-   "updated": "11/10 07:43",
+   "updated": "11/17 12:22",
    "verified": true,
    "evidence": [
-    "日K跳空IS結果（is_result.md）· 11/07 10:55",
-    "缺漏清單（missing.txt）· 11/10 07:43",
-    "授權作廢標記（RUN_AUTHORIZATION.VOID_20261102.json）· 11/07 10:55",
-    "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/07 10:55"
+    "日K跳空IS結果（is_result.md）· 11/17 12:21",
+    "缺漏清單（missing.txt）· 11/17 12:22",
+    "授權作廢標記（RUN_AUTHORIZATION.VOID_20261102.json）· 11/17 12:20",
+    "中午前方向說明（NOTE_morning_horizon_2026-11-06.md）· 11/17 12:20"
    ]
   },
   {
@@ -148,12 +148,12 @@
     "覆蓋閘仍未過"
    ],
    "basis": "report_1109.md 23:29；summary.json；missing.txt 87；real_orders.csv",
-   "updated": "11/10 20:27",
+   "updated": "11/17 12:22",
    "verified": true,
    "evidence": [
-    "11/9 盤前報告（report_1109.md）· 11/08 23:29",
-    "實單檔（real_orders.csv）· 11/10 20:27",
-    "驗證框架 v1（overfit_validation_framework_v1.md）· 11/07 10:55"
+    "11/9 盤前報告（report_1109.md）· 11/17 12:20",
+    "實單檔（real_orders.csv）· 11/17 12:22",
+    "驗證框架 v1（overfit_validation_framework_v1.md）· 11/17 12:21"
    ]
   },
   {
@@ -173,10 +173,10 @@
     "貼文暫停(Leo)"
    ],
    "basis": "ip-plan 檔案時間與草稿內容",
-   "updated": "11/07 10:56",
+   "updated": "11/17 12:20",
    "verified": true,
    "evidence": [
-    "羽球 Reels 文案草稿（reels_badminton_drafts.md）· 11/07 10:56"
+    "羽球 Reels 文案草稿（reels_badminton_drafts.md）· 11/17 12:20"
    ]
   },
   {
@@ -196,13 +196,13 @@
     "等Leo審核"
    ],
    "basis": "badminton/nov7 18:07–18:08 檔案；連續性稽核結論維持 v2、未上傳",
-   "updated": "11/07 18:08",
+   "updated": "11/17 12:23",
    "verified": true,
    "evidence": [
-    "潛水Reel v2（leo_dive_reel_v2.mp4）· 11/07 18:07",
-    "連續性稽核結論（continuity_findings.md）· 11/07 18:08",
-    "v2 剪輯說明（edit_notes_v2.md）· 11/07 18:07",
-    "羽球候選片段清單（shortlist.md）· 11/07 10:56"
+    "潛水Reel v2（leo_dive_reel_v2.mp4）· 11/17 12:23",
+    "連續性稽核結論（continuity_findings.md）· 11/17 12:21",
+    "v2 剪輯說明（edit_notes_v2.md）· 11/17 12:21",
+    "羽球候選片段清單（shortlist.md）· 11/17 12:21"
    ]
   },
   {
@@ -222,12 +222,12 @@
     "等Leo審再做下章"
    ],
    "basis": "out_3a1、out_3a2 檔案時間與審查紀錄",
-   "updated": "11/07 10:56",
+   "updated": "11/17 12:22",
    "verified": true,
    "evidence": [
-    "逐節檢查表（檢查表_題目邏輯_教學順序_由淺入深.md）· 11/07 10:55",
-    "第1章 學生版 PDF（1_【優化版】國三上第1章_相似形_學生版.pdf）· 11/07 10:56",
-    "第2章 學生版 PDF（2_【優化版】國三上第2章_圓_學生版.pdf）· 11/07 10:55"
+    "逐節檢查表（檢查表_題目邏輯_教學順序_由淺入深.md）· 11/17 12:21",
+    "第1章 學生版 PDF（1_【優化版】國三上第1章_相似形_學生版.pdf）· 11/17 12:22",
+    "第2章 學生版 PDF（2_【優化版】國三上第2章_圓_學生版.pdf）· 11/17 12:21"
    ]
   }
  ],
@@ -1006,7 +1006,7 @@
    "from": "researcher",
    "to": "four",
    "item": "低週轉提案 v5 複審結論",
-   "at": "11/07 10:55",
+   "at": "11/17 12:21",
    "state": "sent",
    "note": "書妍複審完成，已無規則缺口"
   },
@@ -1014,7 +1014,7 @@
    "from": "ip",
    "to": "badminton",
    "item": "羽球 Reels 文案草稿",
-   "at": "11/07 10:56",
+   "at": "11/17 12:20",
    "state": "sent",
    "note": "給品安剪輯用的文案"
   }
