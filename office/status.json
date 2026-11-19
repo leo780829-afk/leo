@@ -1,5 +1,5 @@
 {
- "asOf": "11/19 02:22（台北時間）",
+ "asOf": "11/19 10:21（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -96,12 +96,12 @@
     "FinMind未動"
    ],
    "basis": "daily_hist tpex fetch_log 01:54／2013-05-22／進程在跑／twse BLOCKED／FinMind 停",
-   "updated": "11/18 20:31",
+   "updated": "11/19 08:34",
    "verified": true,
    "evidence": [
     "上櫃融資最新（mg_20250402.json）· 11/17 12:21",
     "上市融資最新（mg_20180425.json）· 11/17 12:22",
-    "庫藏股 fetch_log（fetch_log.csv）· 11/18 20:31",
+    "庫藏股 fetch_log（fetch_log.csv）· 11/19 08:34",
     "D2 IS 探索報告（d2_is_explore_report_2026-11-01.md）· 11/17 12:21"
    ]
   },
