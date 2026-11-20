@@ -1,5 +1,5 @@
 {
- "asOf": "11/20 02:18（台北時間）",
+ "asOf": "11/20 10:16（台北時間）",
  "employees": [
   {
    "id": "meimei",
@@ -8,9 +8,9 @@
    "dept": "管理部",
    "light": "working",
    "state": "巡檢中",
-   "title": "02:20 巡檢",
+   "title": "10:16 巡檢",
    "sub": "資料抓取持續更新；無需 Leo 決定",
-   "screen": "02:20 巡檢（11/20）：各 BOT 未新回報，無卡住；tw-stock 最新檔 11/19 22:54（選股篩選）；tw-stock 資料夾仍有新檔（回購公告、日行情抓取）；其餘未確認。舊：tw-stock 上櫃日行情抓取進程（PID 12062）在跑，fetch_log 最後 15:41 到 2014-12-23；其餘無新進度，無需 Leo 決定。",
+   "screen": "10:16 巡檢（11/20）：各 BOT 未新回報；tw-stock 最新檔 11/19 22:54（選股篩選），data 資料夾 11/20 08:37 有庫藏股公告更新；無卡住、無需 Leo 決定；其餘未確認。",
    "lines": [
     "書妍重算覆蓋中",
     "Leo決定補填",
@@ -96,12 +96,12 @@
     "FinMind未動"
    ],
    "basis": "daily_hist tpex fetch_log 01:54／2013-05-22／進程在跑／twse BLOCKED／FinMind 停",
-   "updated": "11/19 20:29",
+   "updated": "11/20 08:37",
    "verified": true,
    "evidence": [
     "上櫃融資最新（mg_20250402.json）· 11/17 12:21",
     "上市融資最新（mg_20180425.json）· 11/17 12:22",
-    "庫藏股 fetch_log（fetch_log.csv）· 11/19 20:29",
+    "庫藏股 fetch_log（fetch_log.csv）· 11/20 08:37",
     "D2 IS 探索報告（d2_is_explore_report_2026-11-01.md）· 11/17 12:21"
    ]
   },
